@@ -1,4 +1,4 @@
-![Simple 15 puzzle game javascript HTML](screen.png)
+![Simple 15 puzzle game javascript HTML](screen.jpg)
 
 # Simple 15 puzzle game for HTML 
 
