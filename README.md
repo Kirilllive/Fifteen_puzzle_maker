@@ -1,4 +1,4 @@
-![Simple 15 puzzle game javascript HTML](screen.jpg)
+![Simple 15 puzzle game javascript HTML](https://repository-images.githubusercontent.com/387269543/89e9283d-ae25-4df9-b525-cf5bb453ae14)
 
 # Simple 15 puzzle game for HTML 
 
