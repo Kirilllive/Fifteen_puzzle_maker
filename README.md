@@ -21,6 +21,7 @@ To use it, you need to create a div element with ID "fifteen" and add an array w
                 diff:16, // difficulty, how many squares will be shuffled
                 size:[512,640], // element size "fifteen" in pixels only
                 grid:[3,3], // the number of squares in the height and width of the picture
+                fill:true, // Stretching the area with the game to fit the element is recommended for fullscreen
                 art:{
                     url:"art.jpg", // path to the picture (you can use any format of supported browsers, gif-animation of svg)
                     ratio:false // enlarge the picture in height or width
