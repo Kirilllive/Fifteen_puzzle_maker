@@ -4,6 +4,8 @@
 
 A simple implementation of the classic mini-game Fifteen Sliding Puzzle, using HTML DOM document elements and without using Canvas or third party libraries. 
 
+When mixing a picture, random replacement of slots is not used, only natural mixing by moving a free slot, thanks to this, an error is excluded, due to which the puzzle may not be assembled.
+
 To use it, you need to create a div element with ID "fifteen" and add an array with parameters, the script will do the rest itself. The script is very simple and you can easily add this mini-game to your web page.
 
 
@@ -18,7 +20,7 @@ To use it, you need to create a div element with ID "fifteen" and add an array w
         <script>
         var setup={
              puzzle_fifteen:{
-                diff:16, // difficulty, how many squares will be shuffled
+                diff:300, // number of movements of the slots for shuffling pictures
                 size:[512,640], // element size "fifteen" in pixels only
                 grid:[3,3], // the number of squares in the height and width of the picture
                 fill:true, // Stretching the area with the game to fit the element is recommended for fullscreen

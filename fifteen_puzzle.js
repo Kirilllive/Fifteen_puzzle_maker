@@ -17,9 +17,9 @@ ceation_slots();
 function ceation_slots(){
     size=[p.size[0]/(p.grid[0]+1),p.size[1]/(p.grid[1]+1)]
     var c=(p.grid[1]+1)*(p.grid[0]+1)-1;
-    f.style.width=p.size[0]+'px'
-    f.style.height=p.size[1]+'px'
-    f.style.position='relative'
+    f.style.width=p.size[0]+'px';
+    f.style.height=p.size[1]+'px';
+    f.style.position='relative';
     if(p.fill){fifteen_resize();window.addEventListener('resize',fifteen_resize,true);}
     for(var y=0;y<=p.grid[1];y++){
         for(var x=0;x<=p.grid[0];x++){
@@ -38,11 +38,17 @@ function ceation_slots(){
 }
 function stir_slots(){
     for(var y=0;y<p.diff;y++){
-        var a=[Math.round(Math.random()*p.grid[1]),Math.round(Math.random()*p.grid[0]),Math.round(Math.random()*p.grid[1]),Math.round(Math.random()*p.grid[0])];
-        var s=[m[a[0]][a[1]],m[a[2]][a[3]]]
-        m[a[0]][a[1]]=s[1];m[a[2]][a[3]]=s[0];
-        if(m[a[0]][a[1]]==0){freeslot=[a[0],a[1]]}
-        else if(m[a[2]][a[3]]==0){freeslot=[a[2],a[3]]}
+        var a=[];
+        if((Math.random()*2)>1){
+            a=[freeslot[0]+(-1+Math.round(Math.random()*2)),freeslot[1]];
+            if(a[0]<0){a[0]=a[0]+2}else if(a[0]>p.grid[1]){a[0]=a[0]-2}
+        }else{
+            a=[freeslot[0],freeslot[1]+(-1+Math.round(Math.random()*2))];
+            if(a[1]<0){a[1]=a[1]+2}else if(a[1]>p.grid[0]){a[1]=a[1]-2}
+        }
+        var s=[m[freeslot[0]][freeslot[1]],m[a[0]][a[1]]]
+        m[freeslot[0]][freeslot[1]]=s[1];m[a[0]][a[1]]=s[0]
+        freeslot=[a[0],a[1]] 
     }
     for(var y=0;y<=p.grid[1];y++){
         for(var x=0;x<=p.grid[0];x++){
