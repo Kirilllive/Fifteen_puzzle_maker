@@ -3,11 +3,11 @@
 <head>
 <style>
 body {
-  height: 97vh;
-  padding: 0;
-  display: grid;
-  align-content: center;
-  justify-content: center;
+    height: 97vh;
+    padding: 0;
+    display: grid;
+    align-content: center;
+    justify-content: center;
 }
 </style>
 </head>
@@ -19,6 +19,7 @@ var setup={
         diff:16, // difficulty, how many squares will be shuffled
         size:[512,640], // element size "fifteen" in pixels only
         grid:[3,4], // the number of squares in the height and width of the picture
+        fill:true, // Stretching the area with the game to fit the element is recommended for fullscreen
         art:{
             url:"art.jpg", // path to the picture (you can use any format of supported browsers, gif-animation of svg)
             ratio:false // enlarge the picture in height or width

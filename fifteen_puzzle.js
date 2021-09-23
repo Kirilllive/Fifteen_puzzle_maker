@@ -1,26 +1,26 @@
-
 //var setup={
 //     puzzle_fifteen:{
 //        diff:16,
 //        size:[720,540],
 //        grid:[3,3],
+//        fill:true,
 //        art:{
-//            url:"UruseiYatsura.gif",
+//            url:"art.jpg",
 //            ratio:false
 //        },
 //        time:"0.1s",
 //        style:"border-radius:12px;"
 //     }
 //}
-
-var p=setup.puzzle_fifteen,freeslot=[],size=[],m=[],o=1;
+var p=setup.puzzle_fifteen,freeslot=[],size=[],m=[],o=1,f=document.getElementById("fifteen");
 ceation_slots();
 function ceation_slots(){
     size=[p.size[0]/(p.grid[0]+1),p.size[1]/(p.grid[1]+1)]
-    var c=(p.grid[1]+1)*(p.grid[0]+1)-1,f=document.getElementById("fifteen");
+    var c=(p.grid[1]+1)*(p.grid[0]+1)-1;
     f.style.width=p.size[0]+'px'
     f.style.height=p.size[1]+'px'
     f.style.position='relative'
+    if(p.fill){fifteen_resize();window.addEventListener('resize',fifteen_resize,true);}
     for(var y=0;y<=p.grid[1];y++){
         for(var x=0;x<=p.grid[0];x++){
             if(o<=c){
@@ -77,4 +77,9 @@ function check_slots(){
             if(c==m[y][x]){c++}
         }
     }if(c==o){alert('win')}
+}
+function fifteen_resize(){
+    var rect=f.parentNode.getBoundingClientRect();
+    if((p.size[0]/p.size[1])<(rect.width/rect.height)){f.style.transform='scale('+(rect.height/p.size[1])+')'}
+    else{f.style.transform='scale('+(rect.width/p.size[0])+')'}
 }
