@@ -12,7 +12,7 @@
 //        style:"border-radius:12px;"
 //     }
 //}
-var p=setup.puzzle_fifteen,freeslot=[],size=[],m=[],o=1,f=document.getElementById("fifteen");
+var p=setup.puzzle_fifteen,freeslot=[],size=[],m=[],o,f=document.getElementById("fifteen");
 ceation_slots();
 function ceation_slots(){
     size=[p.size[0]/(p.grid[0]+1),p.size[1]/(p.grid[1]+1)]
@@ -21,6 +21,7 @@ function ceation_slots(){
     f.style.height=p.size[1]+'px';
     f.style.position='relative';
     if(p.fill){fifteen_resize();window.addEventListener('resize',fifteen_resize,true);}
+    o=1;
     for(var y=0;y<=p.grid[1];y++){
         for(var x=0;x<=p.grid[0];x++){
             if(o<=c){
