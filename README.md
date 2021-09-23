@@ -36,6 +36,4 @@ To use it, you need to create a div element with ID "fifteen" and add an array w
 </html>
 ```
 
-[![ko-fi](https://ko-fi.com/img/githubbutton_sm.svg)](https://ko-fi.com/E1E54DM6V)
-
 [![Patreon](http://odin-interactive.com/img/patron.svg)](https://www.patreon.com/kirill_live)
