@@ -8,6 +8,7 @@ When mixing a picture, random replacement of slots is not used, only natural mix
 
 To use it, you need to create a div element with ID "fifteen" and add an array with parameters, the script will do the rest itself. The script is very simple and you can easily add this mini-game to your web page.
 
+[![Patreon](http://odin-interactive.com/img/patron.svg)](https://www.patreon.com/kirill_live)
 
 # Structure
 
@@ -38,5 +39,5 @@ To use it, you need to create a div element with ID "fifteen" and add an array w
     </body>
 </html>
 ```
-
-[![Patreon](http://odin-interactive.com/img/patron.svg)](https://www.patreon.com/kirill_live)
+# Demo
+[![Patreon](screenshot.jpg)](https://www.patreon.com/kirill_live)

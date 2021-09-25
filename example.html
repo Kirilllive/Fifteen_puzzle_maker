@@ -16,7 +16,7 @@ body {
 <script>
 var setup={
      puzzle_fifteen:{
-        diff:300, // number of movements of the slots for shuffling pictures
+        diff:1, // number of movements of the slots for shuffling pictures
         size:[512,640], // element size "fifteen" in pixels only
         grid:[3,4], // the number of squares in the height and width of the picture
         fill:true, // Stretching the area with the game to fit the element is recommended for fullscreen
@@ -25,7 +25,7 @@ var setup={
             ratio:false // enlarge the picture in height or width
         },
         // optional elements
-        time:"0.1s", // block move animation time
+        time:0.1, // block move animation time
         style:"border-radius:12px;" // style for puzzle square
      }
 }

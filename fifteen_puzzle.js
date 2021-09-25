@@ -1,5 +1,4 @@
-//var setup={
-//     puzzle_fifteen:{
+//var p={
 //        diff:16,
 //        size:[720,540],
 //        grid:[3,3],
@@ -8,10 +7,9 @@
 //            url:"art.jpg",
 //            ratio:false
 //        },
-//        time:"0.1s",
+//        time:0.1,
 //        style:"border-radius:12px;"
 //     }
-//}
 var p=setup.puzzle_fifteen,freeslot=[],size=[],m=[],o,f=document.getElementById("fifteen");
 ceation_slots();
 function ceation_slots(){
@@ -31,7 +29,7 @@ function ceation_slots(){
                 e.setAttribute("onclick","move_slot("+o+")");
                 e.className="slot";
                 e.style="background-image:url("+p.art.url+");background-size:"+((p.art.ratio)? p.size[0]+"px auto":"auto "+p.size[1]+"px")+";background-position:-"+(size[0]*x)+"px -"+(size[1]*y)+"px ;width:"+size[0]+"px;height:"+size[1]+"px;top:"+(size[1]*y)+"px;left:"+(size[0]*x)+"px;position:absolute;"+((p.style)?p.style:"")
-                if(p.time){e.style.transitionDuration=p.time}
+                if(p.time){e.style.transitionDuration=p.time+"s"}
                 f.appendChild(e);o++;
             }else{m[y][x]=0;freeslot=[p.grid[1],p.grid[0]];}
         }
@@ -83,7 +81,7 @@ function check_slots(){
             if(m[y][x]==0){break;}
             if(c==m[y][x]){c++}
         }
-    }if(c==o){alert('win')}
+    }if(c==o){setTimeout(()=>{alert('win')},((p.time)?p.time*1000:0));}
 }
 function fifteen_resize(){
     var rect=f.parentNode.getBoundingClientRect();
