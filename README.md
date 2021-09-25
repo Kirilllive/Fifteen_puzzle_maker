@@ -40,4 +40,4 @@ To use it, you need to create a div element with ID "fifteen" and add an array w
 </html>
 ```
 # Demo
-[![Patreon](screenshot.jpg)](https://www.patreon.com/kirill_live)
+[![Patreon](screenshot.jpg)](https://kirilllive.github.io/Fifteen_puzzle/)
