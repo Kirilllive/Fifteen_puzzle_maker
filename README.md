@@ -40,5 +40,7 @@ To use it, you need to create a div element with ID "fifteen" and add an array w
     </body>
 </html>
 ```
-# Demo
+# Editor / Demo
+You can upload your image, set parameters and generate an html file with the game and your image. You can use the resulting file on your website or directly on your device, or you can modify it yourself, change the parameters, or write your own script that will run after the game is finished.
+
 [![Patreon](screenshot.jpg)](https://kirilllive.github.io/Fifteen_puzzle/)
