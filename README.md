@@ -10,7 +10,7 @@ To use it, you need to create a div element with ID "fifteen" and add an array w
 
 itch.io: https://kirill-live.itch.io/fifteen-puzzle
 
-Twitter: https://twitter.com/Kirill_Live_
+Twitter: https://twitter.com/TuesdayJS_vn
 
 [![Patreon](http://odin-interactive.com/img/patron.svg)](https://www.patreon.com/kirill_live)
 
