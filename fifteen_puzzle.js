@@ -83,7 +83,7 @@ function check_slots(){
             if(m[y][x]==0){break;}
             if(c==m[y][x]){c++}
         }
-    }if(c==o){setTimeout(()=>{alert('win')},((p.time)?p.time*1000:0));}
+    }if(c==o){setTimeout(()=>{ alert('win') },((p.time)?p.time*1000:0));} // alert('win') script that runs at the end of the game
 }
 function fifteen_resize(){
     var rect=f.parentNode.getBoundingClientRect();
