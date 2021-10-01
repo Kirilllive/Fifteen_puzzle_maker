@@ -189,6 +189,24 @@ function fifteen_build(){
         xmlhttp.onerror=function(){if(this.status==0){alert('runetime not loaded');}}
     }
 }
+var drop = {
+    init:function(){
+        if (window.File&&window.FileReader&&window.FileList&&window.Blob) {
+            window.addEventListener("dragover", function (e) {
+                e.preventDefault();
+                e.stopPropagation();
+            });
+            window.addEventListener("drop", function (e) {
+                e.preventDefault();
+                e.stopPropagation();
+                setup.puzzle_fifteen.art.url=window.URL.createObjectURL(e.dataTransfer.files[0])
+                img.src=setup.puzzle_fifteen.art.url
+                img.onload=function(){setup.puzzle_fifteen.size=[img.width,img.height];fifteen_update();}
+            });
+        }
+    },
+};
+window.addEventListener("DOMContentLoaded", drop.init);
 </script>
 <script src="fifteen_puzzle.js"></script> <!--path to file engine-->
 </body>
