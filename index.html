@@ -93,11 +93,11 @@ input:checked+.slider:before{transform:translateX(26px);}
         </tr>
         <tr>
         <td style="height:48px;padding-right:8px;" align="right">Grid width</td>
-        <td><input onchange="setup.puzzle_fifteen.grid[0]=parseInt(this.value);fifteen_update();" value="3" class="input_text" type="text"></td>
+        <td><input id="grid_width" onchange="setup.puzzle_fifteen.grid[0]=parseInt(this.value);fifteen_update();" value="3" class="input_text" type="text"></td>
         </tr>
         <tr>
         <td style="height:48px;padding-right:8px;" align="right">Grid height</td>
-        <td><input onchange="setup.puzzle_fifteen.grid[1]=parseInt(this.value);fifteen_update();" value="4" class="input_text" type="text"></td>
+        <td><input id="grid_height" onchange="setup.puzzle_fifteen.grid[1]=parseInt(this.value);fifteen_update();" value="4" class="input_text" type="text"></td>
         </tr>
         <tr>
         <td style="height:48px;padding-right:8px;" align="right">Move time</td>
@@ -160,8 +160,15 @@ var img_file=document.getElementById('img_file'),img=document.getElementById("ar
 img_file.addEventListener('change',loadFiles);
 function loadFiles(e){
     setup.puzzle_fifteen.art.url=window.URL.createObjectURL(e.target.files[0])
-    img.src=setup.puzzle_fifteen.art.url
-    img.onload=function(){setup.puzzle_fifteen.size=[img.width,img.height];fifteen_update();}
+    img.src=setup.puzzle_fifteen.art.url;
+    img.onload=function(){setup.puzzle_fifteen.size=[img.width,img.height];auto_grid();fifteen_update();}
+}
+function auto_grid(){
+    var s=setup.puzzle_fifteen
+    if(s.size[1]<s.size[0]){s.grid=[Math.round(s.size[0]/(s.size[1]/4))-1,3]}
+    else{s.grid=[3,Math.round(s.size[1]/(s.size[0]/4))-1]}
+    grid_width.value=s.grid[0];
+    grid_height.value=s.grid[1];
 }
 function fifteen_update(){
     f.innerHTML="";
@@ -200,8 +207,8 @@ var drop = {
                 e.preventDefault();
                 e.stopPropagation();
                 setup.puzzle_fifteen.art.url=window.URL.createObjectURL(e.dataTransfer.files[0])
-                img.src=setup.puzzle_fifteen.art.url
-                img.onload=function(){setup.puzzle_fifteen.size=[img.width,img.height];fifteen_update();}
+                img.src=setup.puzzle_fifteen.art.url;
+                img.onload=function(){setup.puzzle_fifteen.size=[img.width,img.height];auto_grid();fifteen_update();}
             });
         }
     },

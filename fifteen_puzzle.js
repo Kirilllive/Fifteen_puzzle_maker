@@ -1,16 +1,3 @@
-//var p={
-//        diff:16,
-//        size:[720,540],
-//        grid:[3,3],
-//        fill:true,
-//        number:true,
-//        art:{
-//            url:"art.jpg",
-//            ratio:false
-//        },
-//        time:0.1,
-//        style:"border-radius:12px;"
-//     }
 var p=setup.puzzle_fifteen,freeslot=[],size=[],m=[],o,f=document.getElementById("fifteen");
 ceation_slots();
 function ceation_slots(){
