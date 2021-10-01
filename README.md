@@ -8,9 +8,9 @@ When mixing a picture, random replacement of slots is not used, only natural mix
 
 To use it, you need to create a div element with ID "fifteen" and add an array with parameters, the script will do the rest itself. The script is very simple and you can easily add this mini-game to your web page.
 
-Editor: https://kirilllive.github.io/Fifteen_puzzle/
+Editor: https://kirilllive.github.io/Fifteen_puzzle_maker/
 
-Demo: https://kirilllive.github.io/Fifteen_puzzle/example.html
+Demo: https://kirilllive.github.io/Fifteen_puzzle_maker/example.html
 
 itch.io: https://kirill-live.itch.io/fifteen-puzzle
 
@@ -22,11 +22,11 @@ Twitter: https://twitter.com/TuesdayJS_vn
 
 You can upload or drag your image, set parameters and generate an html file with the game and your image. You can use the resulting file on your website or directly on your device, or you can modify it yourself, change the parameters, or write your own script that will run after the game is finished.
 
-Editor: https://kirilllive.github.io/Fifteen_puzzle/
+Editor: https://kirilllive.github.io/Fifteen_puzzle_maker/
 
-Demo: https://kirilllive.github.io/Fifteen_puzzle/example.html
+Demo: https://kirilllive.github.io/Fifteen_puzzle_maker/example.html
 
-[![Patreon](screenshot.jpg)](https://kirilllive.github.io/Fifteen_puzzle/)
+[![Patreon](screenshot.jpg)](https://kirilllive.github.io/Fifteen_puzzle_maker/)
 
 # Structure
 
