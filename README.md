@@ -18,6 +18,16 @@ Twitter: https://twitter.com/TuesdayJS_vn
 
 [![Patreon](http://odin-interactive.com/img/patron.svg)](https://www.patreon.com/kirill_live)
 
+# Editor / Demo
+
+You can upload or drag your image, set parameters and generate an html file with the game and your image. You can use the resulting file on your website or directly on your device, or you can modify it yourself, change the parameters, or write your own script that will run after the game is finished.
+
+Editor: https://kirilllive.github.io/Fifteen_puzzle/
+
+Demo: https://kirilllive.github.io/Fifteen_puzzle/example.html
+
+[![Patreon](screenshot.jpg)](https://kirilllive.github.io/Fifteen_puzzle/)
+
 # Structure
 
 ```html
@@ -49,12 +59,3 @@ Twitter: https://twitter.com/TuesdayJS_vn
 </html>
 ```
 
-# Editor / Demo
-
-You can upload your image, set parameters and generate an html file with the game and your image. You can use the resulting file on your website or directly on your device, or you can modify it yourself, change the parameters, or write your own script that will run after the game is finished.
-
-Editor: https://kirilllive.github.io/Fifteen_puzzle/
-
-Demo: https://kirilllive.github.io/Fifteen_puzzle/example.html
-
-[![Patreon](screenshot.jpg)](https://kirilllive.github.io/Fifteen_puzzle/)
