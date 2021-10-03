@@ -172,10 +172,14 @@ var setup={
      }
 }
 slot_style.value=setup.puzzle_fifteen.style;
-var img_file=document.getElementById('img_file'),img=document.getElementById("art");
+var img_file=document.getElementById('img_file'),img=document.getElementById("art"),file;
 img_file.addEventListener('change',loadFiles);
 function loadFiles(e){
-    setup.puzzle_fifteen.art.url=window.URL.createObjectURL(e.target.files[0])
+    file=img_file.files[0];
+    adden_file();
+}
+function adden_file(){
+    setup.puzzle_fifteen.art.url=window.URL.createObjectURL(file)
     img.src=setup.puzzle_fifteen.art.url;
     img.onload=function(){setup.puzzle_fifteen.size=[img.width,img.height];auto_grid();fifteen_update();}
 }
@@ -194,7 +198,7 @@ function fifteen_update(){
 }
 function fifteen_build(){
     var reader=new FileReader();
-    if(img_file.files[0]){reader.readAsDataURL(img_file.files[0]);}else{alert('Please upload a file with a picture')}
+    if(file){reader.readAsDataURL(file);}else{alert('Please upload a file with a picture')}
     reader.onload=function(){setup.puzzle_fifteen.art.url=reader.result;gen_file();}
     reader.onerror=function(error){alert('Error: '+error);}
     function gen_file(){
@@ -217,16 +221,15 @@ function fifteen_build(){
 var drop = {
     init:function(){
         if (window.File&&window.FileReader&&window.FileList&&window.Blob) {
-            window.addEventListener("dragover", function (e) {
+            window.addEventListener("dragover",function(e){
                 e.preventDefault();
                 e.stopPropagation();
             });
-            window.addEventListener("drop", function (e) {
+            window.addEventListener("drop",function(e){
                 e.preventDefault();
                 e.stopPropagation();
-                setup.puzzle_fifteen.art.url=window.URL.createObjectURL(e.dataTransfer.files[0])
-                img.src=setup.puzzle_fifteen.art.url;
-                img.onload=function(){setup.puzzle_fifteen.size=[img.width,img.height];auto_grid();fifteen_update();}
+                file=e.dataTransfer.files[0];
+                adden_file();
             });
         }
     },
