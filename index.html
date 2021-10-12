@@ -5,7 +5,7 @@
 <link rel="shortcut icon" href="icon.jpg" type="image/x-icon">
 <meta content="#c4cebb" name="theme-color" charset="UTF-8">
 <meta name="description" content="A simple implementation of the classic mini-game Fifteen Sliding Puzzle, using HTML5 DOM document elements and without using Canvas or third party libraries.">
-<meta name="keywords" content="15Puzzle, js, Open Source, HTML5, Sliding">
+<meta name="keywords" content="15Puzzle, js, Open Source, HTML5, Sliding, web, base">
 <meta name="author" content="Kirill Live">
 <style>
 body {
@@ -141,7 +141,7 @@ input:checked+.slider:before{transform:translateX(26px);}
         <td style="height:48px;" colspan="2"><div class="button" onclick="fifteen_update();">Refresh</div></td>
         </tr>
         <tr>
-        <td style="height:48px;" colspan="2"><div class="button" onclick="fifteen_build();">Build</div></td>
+        <td style="height:48px;" colspan="2"><div class="button" onclick="fifteen_build();">Create HTML</div></td>
         </tr>
         <tr><td style="height:16px;" colspan="2"></td></tr>
         <tr>
@@ -168,7 +168,7 @@ var setup={
         },
         // optional elements
         time:0.1, // block move animation time
-        style:"border-radius:12px;background-color:#c4cebb;display:grid;justify-items:center;align-items:center;font-family:Arial;font-size:32px;color:#fff;" // style for puzzle square
+        style:"background-color:#c4cebb;display:grid;justify-items:center;align-items:center;font-family:Arial;color:#fff;border-radius:12px;font-size:32px;" // style for puzzle square
      }
 }
 slot_style.value=setup.puzzle_fifteen.style;
@@ -181,7 +181,7 @@ function loadFiles(e){
 function adden_file(){
     setup.puzzle_fifteen.art.url=window.URL.createObjectURL(file)
     img.src=setup.puzzle_fifteen.art.url;
-    img.onload=function(){setup.puzzle_fifteen.size=[img.width,img.height];auto_grid();fifteen_update();}
+    img.onload=function(){setup.puzzle_fifteen.size=[img.width,img.height];auto_grid();auto_style();fifteen_update();}
 }
 function auto_grid(){
     var s=setup.puzzle_fifteen
@@ -191,6 +191,16 @@ function auto_grid(){
     grid_height.value=s.grid[1];
     width.value=s.size[0];
     height.value=s.size[1];
+}
+function auto_style(){
+    var s=setup.puzzle_fifteen,v,i;
+    if(s.size[1]<s.size[0]){v=Math.round((s.size[0]/s.grid[0])/16)}
+    else{v=Math.round((s.size[1]/s.grid[1])/16)}
+    d=s.style.split(";");
+    for(i=0;i<d.length;i++){
+        if(d[i].includes("border-radius")){s.style=s.style.replace(d[i],"border-radius:"+Math.round(v*1.5)+"px")}
+        else if(d[i].includes("font-size")){s.style=s.style.replace(d[i],"font-size:"+(v*3)+"px")}
+    }slot_style.value=s.style;
 }
 function fifteen_update(){
     f.innerHTML="";
