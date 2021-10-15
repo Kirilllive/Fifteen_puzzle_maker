@@ -57,8 +57,13 @@ Twitter: https://twitter.com/TuesdayJS_vn
 
 You can upload your image, set parameters and generate an html file with the game and your image. You can use the resulting file on your website or directly on your device, or you can modify it yourself, change the parameters, or write your own script that will run after the game is finished.
 
-Editor: https://kirilllive.github.io/Fifteen_puzzle/
+Play online maker: https://kirilllive.github.io/Fifteen_puzzle/
 
-Demo: https://kirilllive.github.io/Fifteen_puzzle/example.html
+Editor features
+- Automatic style adaptation based on image dimensions
+- Proportional division of an image into blocks
+- Building / exporting HTML file with the game
+- Moving multiple blocks in one move
+- Drag and Drop upload image
 
 [![Patreon](screenshot.jpg)](https://kirilllive.github.io/Fifteen_puzzle/)
