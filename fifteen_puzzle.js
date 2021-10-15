@@ -49,17 +49,28 @@ function stir_slots(){
     }
 }
 function move_slot(s) {
-    var e=document.getElementById("slot"+s);
-    for(var y=-1;y<=1;y++){
-        for(var x=-1;x<=1;x++){
-            if(((x==0&&y==-1)||(x==-1&&y==0)||(x==0&&y==1)||(x==1&&y==0))&&m[freeslot[0]+y]&&m[freeslot[0]+y][freeslot[1]+x]&&m[freeslot[0]+y][freeslot[1]+x]==s){
-                e.style.left=(freeslot[1]*size[0])+"px";
-                e.style.top =(freeslot[0]*size[1])+"px";
-                m[freeslot[0]][freeslot[1]]=s
-                m[freeslot[0]+y][freeslot[1]+x]=0
-                freeslot=[freeslot[0]+y,freeslot[1]+x];
-                s=false;break;
-            }
+    var z=0,e,a=[],k,j;
+    function move(y,x,h,w){
+        j=m[y][x]
+        e=document.getElementById("slot"+j);
+        e.style.left=((x+w)*size[0])+"px";
+        e.style.top =((y+h)*size[1])+"px";
+        m[y][x]=k;k=j;
+    }
+    for(var y=0;y<p.grid[1]+1;y++){
+        for(var x=0;x<p.grid[0]+1;x++){
+            if(m[y][x]==s){
+                a=[y,x];k=0;
+                if(freeslot[0]==a[0]){
+                    if(freeslot[1]>a[1]){for(z=0;z<freeslot[1]-a[1];z++){move(a[0],a[1]+z,0,+1)}}
+                    else if(freeslot[1]<a[1]){for(z=0;z<a[1]-freeslot[1];z++){move(a[0],a[1]-z,0,-1)}}
+                    m[freeslot[0]][freeslot[1]]=k;freeslot=[a[0],a[1]];s=false;break;
+                }else if(freeslot[1]==a[1]){
+                    if(freeslot[0]>a[0]){for(z=0;z<freeslot[0]-a[0];z++){ move(a[0]+z,a[1],+1,0)}}
+                    else if(freeslot[0]<a[0]){for(z=0;z<a[0]-freeslot[0];z++){move(a[0]-z,a[1],-1,0)}}
+                    m[freeslot[0]][freeslot[1]]=k;freeslot=[a[0],a[1]];s=false;break;
+                }
+            }if(!s){break;}
         }if(!s){break;}
     }check_slots();
 }
