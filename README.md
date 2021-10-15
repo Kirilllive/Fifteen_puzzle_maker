@@ -12,11 +12,11 @@ The engine code is very flexible for modifications, has many settings and can be
 
 To use it, you need to create a div element with ID "fifteen" and add an array with parameters, the script will do the rest itself. The script is very simple and you can easily add this mini-game to your web page.
 
-Editor: https://kirilllive.github.io/Fifteen_puzzle/
+Editor: https://kirilllive.github.io/Fifteen_puzzle_maker/
 
-Demo: https://kirilllive.github.io/Fifteen_puzzle/example.html
+Demo: https://kirilllive.github.io/Fifteen_puzzle_maker/example.html
 
-itch.io: https://kirill-live.itch.io/fifteen-puzzle
+itch.io: https://kirill-live.itch.io/Fifteen_puzzle_maker
 
 Twitter: https://twitter.com/TuesdayJS_vn
 
@@ -57,7 +57,7 @@ Twitter: https://twitter.com/TuesdayJS_vn
 
 You can upload your image, set parameters and generate an html file with the game and your image. You can use the resulting file on your website or directly on your device, or you can modify it yourself, change the parameters, or write your own script that will run after the game is finished.
 
-Play online maker: https://kirilllive.github.io/Fifteen_puzzle/
+Play online maker: https://kirilllive.github.io/Fifteen_puzzle_maker/
 
 Editor features
 - Automatic style adaptation based on image dimensions
@@ -66,4 +66,4 @@ Editor features
 - Moving multiple blocks in one move
 - Drag and Drop upload image
 
-[![Simple 15 puzzle game maker for HTML ](https://user-images.githubusercontent.com/13263198/137487556-f4ccb712-7d6f-4178-baee-9473e0352db5.gif)](https://kirilllive.github.io/Fifteen_puzzle/)
+[![Simple 15 puzzle game maker for HTML ](https://user-images.githubusercontent.com/13263198/137487556-f4ccb712-7d6f-4178-baee-9473e0352db5.gif)](https://kirilllive.github.io/Fifteen_puzzle_maker/)
