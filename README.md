@@ -6,27 +6,21 @@ A simple implementation of the classic mini-game Fifteen Sliding Puzzle, using H
 
 When mixing a picture, random replacement of slots is not used, only natural mixing by moving a free slot, thanks to this, an error is excluded, due to which the puzzle may not be assembled.
 
+By solving the puzzle, you can move several blocks in a column and a row in one move. 
+
+The engine code is very flexible for modifications, has many settings and can be integrated into any web page or web app.
+
 To use it, you need to create a div element with ID "fifteen" and add an array with parameters, the script will do the rest itself. The script is very simple and you can easily add this mini-game to your web page.
 
-Editor: https://kirilllive.github.io/Fifteen_puzzle_maker/
+Editor: https://kirilllive.github.io/Fifteen_puzzle/
 
-Demo: https://kirilllive.github.io/Fifteen_puzzle_maker/example.html
+Demo: https://kirilllive.github.io/Fifteen_puzzle/example.html
 
 itch.io: https://kirill-live.itch.io/fifteen-puzzle
 
 Twitter: https://twitter.com/TuesdayJS_vn
 
 [![Patreon](http://odin-interactive.com/img/patron.svg)](https://www.patreon.com/kirill_live)
-
-# Editor / Demo
-
-You can upload or drag your image, set parameters and generate an html file with the game and your image. You can use the resulting file on your website or directly on your device, or you can modify it yourself, change the parameters, or write your own script that will run after the game is finished.
-
-Editor: https://kirilllive.github.io/Fifteen_puzzle_maker/
-
-Demo: https://kirilllive.github.io/Fifteen_puzzle_maker/example.html
-
-[![Patreon](screenshot.jpg)](https://kirilllive.github.io/Fifteen_puzzle_maker/)
 
 # Structure
 
@@ -49,7 +43,7 @@ Demo: https://kirilllive.github.io/Fifteen_puzzle_maker/example.html
                     ratio:false // enlarge the picture in height or width
                 },
                 // optional elements
-                time:"0.1s", // block move animation time
+                time:"0.1", // block move animation time
                 style:"border-radius:12px;" // style for puzzle square
              }
         }
@@ -59,3 +53,12 @@ Demo: https://kirilllive.github.io/Fifteen_puzzle_maker/example.html
 </html>
 ```
 
+# Editor / Demo
+
+You can upload your image, set parameters and generate an html file with the game and your image. You can use the resulting file on your website or directly on your device, or you can modify it yourself, change the parameters, or write your own script that will run after the game is finished.
+
+Editor: https://kirilllive.github.io/Fifteen_puzzle/
+
+Demo: https://kirilllive.github.io/Fifteen_puzzle/example.html
+
+[![Patreon](screenshot.jpg)](https://kirilllive.github.io/Fifteen_puzzle/)
