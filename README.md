@@ -16,7 +16,7 @@ Editor: https://kirilllive.github.io/Fifteen_puzzle_maker/
 
 Demo: https://kirilllive.github.io/Fifteen_puzzle_maker/example.html
 
-itch.io: https://kirill-live.itch.io/Fifteen_puzzle_maker
+itch.io: https://kirill-live.itch.io/fifteen-puzzle
 
 Twitter: https://twitter.com/TuesdayJS_vn
 
