@@ -66,4 +66,4 @@ Editor features
 - Moving multiple blocks in one move
 - Drag and Drop upload image
 
-[![Patreon](screenshot.jpg)](https://kirilllive.github.io/Fifteen_puzzle/)
+[![Simple 15 puzzle game maker for HTML ](https://user-images.githubusercontent.com/13263198/137487556-f4ccb712-7d6f-4178-baee-9473e0352db5.gif)](https://kirilllive.github.io/Fifteen_puzzle/)
