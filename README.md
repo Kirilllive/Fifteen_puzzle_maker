@@ -1,6 +1,6 @@
 ![Simple 15 puzzle game javascript HTML](https://repository-images.githubusercontent.com/387269543/be595743-c52e-41f0-a40c-3cedce7908a1)
 
-# Simple 15 puzzle game for HTML 
+# Fifteen Sliding Puzzle maker for HTML 
 
 A simple implementation of the classic mini-game Fifteen Sliding Puzzle, using HTML DOM document elements and without using Canvas or third party libraries. 
 
