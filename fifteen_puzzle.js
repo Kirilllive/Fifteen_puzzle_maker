@@ -2,7 +2,7 @@ var p=setup.puzzle_fifteen,freeslot=[],size=[],m=[],o,f=document.getElementById(
 ceation_slots();
 function ceation_slots(){
     size=[p.size[0]/(p.grid[0]+1),p.size[1]/(p.grid[1]+1)]
-    var c=(p.grid[1]+1)*(p.grid[0]+1)-1;
+    var c=(p.emptySlot)?p.emptySlot:(p.grid[1]+1)*(p.grid[0]+1);
     f.style.width=p.size[0]+'px';
     f.style.height=p.size[1]+'px';
     f.style.position='relative';
@@ -10,7 +10,7 @@ function ceation_slots(){
     o=1;
     for(var y=0;y<=p.grid[1];y++){
         for(var x=0;x<=p.grid[0];x++){
-            if(o<=c){
+            if(o!=c){
                 if(!m[y]){m[y]=[]};m[y][x]=o;
                 var e=document.createElement("div");
                 e.id="slot"+o;
@@ -20,7 +20,7 @@ function ceation_slots(){
                 e.style="background-image:url("+p.art.url+");background-size:"+((p.art.ratio)? p.size[0]+"px auto":"auto "+p.size[1]+"px")+";background-position:-"+(size[0]*x)+"px -"+(size[1]*y)+"px ;width:"+size[0]+"px;height:"+size[1]+"px;top:"+(size[1]*y)+"px;left:"+(size[0]*x)+"px;position:absolute;"+((p.style)?p.style:"")
                 if(p.time){e.style.transitionDuration=p.time+"s"}
                 f.appendChild(e);o++;
-            }else{m[y][x]=0;freeslot=[p.grid[1],p.grid[0]];}
+            }else{m[y][x]=0;freeslot=[y,x];o++;}
         }
     }stir_slots();
 }
@@ -75,16 +75,22 @@ function move_slot(s) {
     }check_slots();
 }
 function check_slots(){
-    var c=1;
+    var check=1;
     for(var y=0;y<=p.grid[1];y++){
         for(var x=0;x<=p.grid[0];x++){
-            if(m[y][x]==0){break;}
-            if(c==m[y][x]){c++}
+            if(m[y][x]==0||check==m[y][x]){check++}else{break;}
         }
-    }if(c==o){setTimeout(()=>{ alert('win') },((p.time)?p.time*1000:0));} // alert('win') script that runs at the end of the game
+    }if(check==o){setTimeout(()=>{ alert('win') },((p.time)?p.time*1000:0));} // alert('win') script that runs at the end of the game
 }
 function fifteen_resize(){
     var rect=f.parentNode.getBoundingClientRect();
     if((p.size[0]/p.size[1])<(rect.width/rect.height)){f.style.transform='scale('+(rect.height/p.size[1])+')'}
     else{f.style.transform='scale('+(rect.width/p.size[0])+')'}
 }
+if(p.keyBoard){document.addEventListener("keydown",function(e){
+    e=e.keyCode;
+         if(e==37){move_slot(m[freeslot[0]][freeslot[1]+1]);}
+    else if(e==39){move_slot(m[freeslot[0]][freeslot[1]-1]);}
+    else if(e==38){move_slot(m[freeslot[0]+1][freeslot[1]]);}
+    else if(e==40){move_slot(m[freeslot[0]-1][freeslot[1]]);}
+})}

@@ -35,18 +35,20 @@ To use it, you need to create a div element with ID "fifteen" and add an array w
         <script>
         var setup={
              puzzle_fifteen:{
-                diff:300, // number of movements of the slots for shuffling pictures
-                size:[512,640], // element size "fifteen" in pixels only
-                grid:[3,3], // the number of squares in the height and width of the picture
+                diff:300, // Number of movements of the slots for shuffling pictures
+                size:[512,640], // Clement size "fifteen" in pixels only
+                grid:[3,3], // The number of squares in the height and width of the picture
                 fill:true, // Stretching the area with the game to fit the element is recommended for fullscreen
                 number:true, // Slot sequence number
                 art:{
-                    url:"art.jpg", // path to the picture (you can use any format of supported browsers, gif-animation and svg)
-                    ratio:false // enlarge the picture in height or width
+                    url:"art.jpg", // Path to the picture (you can use any format of supported browsers, gif-animation and svg)
+                    ratio:false // Enlarge the picture in height or width
                 },
                 // optional elements
                 time:"0.1", // block move animation time
-                style:"border-radius:12px;" // style for puzzle square
+                style:"border-radius:12px;", // style for puzzle square
+                emptySlot:[1], // Empty square number, defaults to the lower right quadrant.
+                keyBoard:true // Control using the keys on the keyboard
              }
         }
         </script>
