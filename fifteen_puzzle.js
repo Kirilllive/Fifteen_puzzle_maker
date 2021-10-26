@@ -94,3 +94,19 @@ if(p.keyBoard){document.addEventListener("keydown",function(e){
     else if(e==38){move_slot(m[freeslot[0]+1][freeslot[1]]);}
     else if(e==40){move_slot(m[freeslot[0]-1][freeslot[1]]);}
 })}
+let gamepad,gamepadPress;
+if(p.gamePad){window.addEventListener('gamepadconnected',function(){
+        gamepad=navigator.getGamepads()[event.gamepad.index];
+        setInterval(() => {
+            const statenow=gamepad.buttons.some(btn => btn.pressed);
+            if (gamepadPress!==statenow){
+                gamepadPress=statenow;
+                     if(gamepad.buttons[12].pressed){move_slot(m[freeslot[0]+1][freeslot[1]]);}
+                else if(gamepad.buttons[14].pressed){move_slot(m[freeslot[0]][freeslot[1]+1]);}
+                else if(gamepad.buttons[15].pressed){move_slot(m[freeslot[0]][freeslot[1]-1]);}
+                else if(gamepad.buttons[13].pressed){move_slot(m[freeslot[0]-1][freeslot[1]]);}
+            }
+        },100)
+    });
+}
+
