@@ -80,7 +80,7 @@ function check_slots(){
         for(var x=0;x<=p.grid[0];x++){
             if(m[y][x]==0||check==m[y][x]){check++}else{break;}
         }
-    }if(check==o){setTimeout(()=>{ alert('win') },((p.time)?p.time*1000:0));} // alert('win') script that runs at the end of the game
+    }if(check==o){setTimeout(()=>{ alert('win') },((p.time)?p.time*1000:0));} // <-- alert('win') script that runs at the end of the game
 }
 function fifteen_resize(){
     var rect=f.parentNode.getBoundingClientRect();
@@ -95,18 +95,21 @@ if(p.keyBoard){document.addEventListener("keydown",function(e){
     else if(e==40){move_slot(m[freeslot[0]-1][freeslot[1]]);}
 })}
 let gamepad,gamepadPress;
-if(p.gamePad){window.addEventListener('gamepadconnected',function(){
-        gamepad=navigator.getGamepads()[event.gamepad.index];
-        setInterval(() => {
-            const statenow=gamepad.buttons.some(btn => btn.pressed);
-            if (gamepadPress!==statenow){
-                gamepadPress=statenow;
-                     if(gamepad.buttons[12].pressed){move_slot(m[freeslot[0]+1][freeslot[1]]);}
-                else if(gamepad.buttons[14].pressed){move_slot(m[freeslot[0]][freeslot[1]+1]);}
-                else if(gamepad.buttons[15].pressed){move_slot(m[freeslot[0]][freeslot[1]-1]);}
-                else if(gamepad.buttons[13].pressed){move_slot(m[freeslot[0]-1][freeslot[1]]);}
+if(p.gamePad){window.addEventListener('gamepadconnected',function(e){
+        const update=()=>{
+            for (gamepad of navigator.getGamepads()){
+                if (!gamepad) continue;
+                const statenow=gamepad.buttons.some(btn=>btn.pressed);
+                if (gamepadPress!==statenow){
+                    gamepadPress=statenow;
+                         if(gamepad.buttons[12].pressed&&m[freeslot[0]+1]){move_slot(m[freeslot[0]+1][freeslot[1]]);}
+                    else if(gamepad.buttons[14].pressed&&m[freeslot[0]])  {move_slot(m[freeslot[0]][freeslot[1]+1]);}
+                    else if(gamepad.buttons[15].pressed&&m[freeslot[0]])  {move_slot(m[freeslot[0]][freeslot[1]-1]);}
+                    else if(gamepad.buttons[13].pressed&&m[freeslot[0]-1]){move_slot(m[freeslot[0]-1][freeslot[1]]);}
+                }
             }
-        },100)
+            requestAnimationFrame(update);
+        };update();
     });
 }
 
