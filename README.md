@@ -11,13 +11,13 @@ By solving the puzzle, you can move several blocks in a column and a row in one 
 The engine code is very flexible for modifications, has many settings and can be integrated into any web page or web app.
 
 
-Editor: https://kirilllive.github.io/Fifteen_puzzle_maker/
+> Editor: https://kirilllive.github.io/Fifteen_puzzle_maker/
 
-Demo: https://kirilllive.github.io/Fifteen_puzzle_maker/example.html
+> Demo: https://kirilllive.github.io/Fifteen_puzzle_maker/example.html
 
-itch.io: https://kirill-live.itch.io/fifteen-puzzle
+> itch.io: https://kirill-live.itch.io/fifteen-puzzle
 
-Twitter: https://twitter.com/TuesdayJS_vn
+> Twitter: https://twitter.com/TuesdayJS_vn
 
 [![Patreon](http://odin-interactive.com/img/patron.svg)](https://www.patreon.com/kirill_live)
 
