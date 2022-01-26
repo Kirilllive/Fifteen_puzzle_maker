@@ -19,7 +19,7 @@ The engine code is very flexible for modifications, has many settings and can be
 
 > Twitter: https://twitter.com/TuesdayJS_vn
 
-[![Patreon](http://odin-interactive.com/img/patron.svg)](https://www.patreon.com/kirill_live)
+[![Patreon](http://odin-interactive.com/img/patron.svg)](https://www.patreon.com/tuesday_js)
 
 
 # Structure
