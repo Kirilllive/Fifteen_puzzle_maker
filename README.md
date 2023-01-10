@@ -1,4 +1,4 @@
-![Simple 15 puzzle game javascript HTML](https://repository-images.githubusercontent.com/387269543/be595743-c52e-41f0-a40c-3cedce7908a1)
+![Simple 15 puzzle game javascript HTML](https://user-images.githubusercontent.com/13263198/211662407-f981cc2c-317b-4c40-a03f-7ba01ff9b8a0.jpg)
 
 # Fifteen Sliding Puzzle maker for HTML 
 
