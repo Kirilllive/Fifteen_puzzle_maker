@@ -8,11 +8,11 @@ function ceation_slots(){
     f.style.position='relative';
     if(p.fill){fifteen_resize();window.addEventListener('resize',fifteen_resize,true);}
     o=1;
-    for(var y=0;y<=p.grid[1];y++){
-        for(var x=0;x<=p.grid[0];x++){
+    for(let y=0;y<=p.grid[1];y++){
+        for(let x=0;x<=p.grid[0];x++){
             if(o!=c){
                 if(!m[y]){m[y]=[]};m[y][x]=o;
-                var e=document.createElement("div");
+                let e=document.createElement("div");
                 e.id="slot"+o;
                 e.setAttribute("onclick","move_slot("+o+")");
                 e.className="slot";
