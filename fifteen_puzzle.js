@@ -26,7 +26,7 @@ function ceation_slots(){
 }
 function stir_slots(){
     for(var y=0;y<p.diff;y++){
-        var a=[];
+        let a=[];
         if((Math.random()*2)>1){
             a=[freeslot[0]+(-1+Math.round(Math.random()*2)),freeslot[1]];
             if(a[0]<0){a[0]=a[0]+2}else if(a[0]>p.grid[1]){a[0]=a[0]-2}
