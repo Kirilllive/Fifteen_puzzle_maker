@@ -34,7 +34,7 @@ function stir_slots(){
             a=[freeslot[0],freeslot[1]+(-1+Math.round(Math.random()*2))];
             if(a[1]<0){a[1]=a[1]+2}else if(a[1]>p.grid[0]){a[1]=a[1]-2}
         }
-        var s=[m[freeslot[0]][freeslot[1]],m[a[0]][a[1]]]
+        let s=[m[freeslot[0]][freeslot[1]],m[a[0]][a[1]]]
         m[freeslot[0]][freeslot[1]]=s[1];m[a[0]][a[1]]=s[0]
         freeslot=[a[0],a[1]] 
     }
