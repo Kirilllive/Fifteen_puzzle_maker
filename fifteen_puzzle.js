@@ -41,7 +41,7 @@ function stir_slots(){
     for(var y=0;y<=p.grid[1];y++){
         for(var x=0;x<=p.grid[0];x++){
             if(m[y][x]){
-                var e=document.getElementById("slot"+m[y][x])
+                let e=document.getElementById("slot"+m[y][x])
                 e.style.left=(x*size[0])+"px";
                 e.style.top =(y*size[1])+"px";
             }
