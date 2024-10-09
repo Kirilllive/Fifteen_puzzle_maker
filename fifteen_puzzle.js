@@ -25,7 +25,7 @@ function ceation_slots(){
     }stir_slots();
 }
 function stir_slots(){
-    for(var y=0;y<p.diff;y++){
+    for(let y=0;y<p.diff;y++){
         let a=[];
         if((Math.random()*2)>1){
             a=[freeslot[0]+(-1+Math.round(Math.random()*2)),freeslot[1]];
