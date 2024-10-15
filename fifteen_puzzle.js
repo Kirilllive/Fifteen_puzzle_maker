@@ -38,7 +38,7 @@ function stir_slots(){
         m[freeslot[0]][freeslot[1]]=s[1];m[a[0]][a[1]]=s[0]
         freeslot=[a[0],a[1]] 
     }
-    for(var y=0;y<=p.grid[1];y++){
+    for(let y=0;y<=p.grid[1];y++){
         for(var x=0;x<=p.grid[0];x++){
             if(m[y][x]){
                 let e=document.getElementById("slot"+m[y][x])
