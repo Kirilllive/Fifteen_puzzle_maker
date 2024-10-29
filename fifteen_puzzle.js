@@ -49,7 +49,7 @@ function stir_slots(){
     }
 }
 function move_slot(s) {
-    var z=0,e,a=[],k,j;
+    let z=0,e,a=[],k,j;
     function move(y,x,h,w){
         j=m[y][x]
         e=document.getElementById("slot"+j);
