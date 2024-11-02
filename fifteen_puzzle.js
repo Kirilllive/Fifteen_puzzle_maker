@@ -39,7 +39,7 @@ function stir_slots(){
         freeslot=[a[0],a[1]] 
     }
     for(let y=0;y<=p.grid[1];y++){
-        for(var x=0;x<=p.grid[0];x++){
+        for(let x=0;x<=p.grid[0];x++){
             if(m[y][x]){
                 let e=document.getElementById("slot"+m[y][x])
                 e.style.left=(x*size[0])+"px";
