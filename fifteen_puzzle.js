@@ -58,7 +58,7 @@ function move_slot(s) {
         m[y][x]=k;k=j;
     }
     for(let y=0;y<p.grid[1]+1;y++){
-        for(var x=0;x<p.grid[0]+1;x++){
+        for(let x=0;x<p.grid[0]+1;x++){
             if(m[y][x]==s){
                 a=[y,x];k=0;
                 if(freeslot[0]==a[0]){
