@@ -83,7 +83,7 @@ function check_slots(){
     }if(check==o){setTimeout(()=>{ alert('win') },((p.time)?p.time*1000:0));} // <-- alert('win') script that runs at the end of the game
 }
 function fifteen_resize(){
-    var rect=f.parentNode.getBoundingClientRect();
+    let rect=f.parentNode.getBoundingClientRect();
     if((p.size[0]/p.size[1])<(rect.width/rect.height)){f.style.transform='scale('+(rect.height/p.size[1])+')'}
     else{f.style.transform='scale('+(rect.width/p.size[0])+')'}
 }
