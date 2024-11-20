@@ -57,7 +57,7 @@ function move_slot(s) {
         e.style.top =((y+h)*size[1])+"px";
         m[y][x]=k;k=j;
     }
-    for(let y=0;y<p.grid[1]+1;y++){
+    let (let y=0;y<p.grid[1]+1;y++){
         for(let x=0;x<p.grid[0]+1;x++){
             if(m[y][x]==s){
                 a=[y,x];k=0;
