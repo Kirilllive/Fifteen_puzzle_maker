@@ -76,7 +76,7 @@ function move_slot(s) {
 }
 function check_slots(){
     let check=1;
-    for(var y=0;y<=p.grid[1];y++){
+    for(let y=0;y<=p.grid[1];y++){
         for(var x=0;x<=p.grid[0];x++){
             if(m[y][x]==0||check==m[y][x]){check++}else{break;}
         }
