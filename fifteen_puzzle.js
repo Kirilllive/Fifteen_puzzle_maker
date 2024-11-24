@@ -77,7 +77,7 @@ function move_slot(s) {
 function check_slots(){
     let check=1;
     for(let y=0;y<=p.grid[1];y++){
-        for(var x=0;x<=p.grid[0];x++){
+        for(let x=0;x<=p.grid[0];x++){
             if(m[y][x]==0||check==m[y][x]){check++}else{break;}
         }
     }if(check==o){setTimeout(()=>{ alert('win') },((p.time)?p.time*1000:0));} // <-- alert('win') script that runs at the end of the game
