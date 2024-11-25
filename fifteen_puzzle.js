@@ -48,7 +48,7 @@ function stir_slots(){
         }
     }
 }
-function move_slot(s) {
+function move_slot(s){
     let z=0,e,a=[],k,j;
     function move(y,x,h,w){
         j=m[y][x]
