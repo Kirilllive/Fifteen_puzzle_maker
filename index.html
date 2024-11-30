@@ -186,7 +186,7 @@ function adden_file(){
     img.onload=function(){setup.puzzle_fifteen.size=[img.width,img.height];auto_grid();auto_style();fifteen_update();}
 }
 function auto_grid(){
-    var s=setup.puzzle_fifteen
+    let s=setup.puzzle_fifteen
     if(s.size[1]<s.size[0]){s.grid=[Math.round(s.size[0]/(s.size[1]/4))-1,3]}
     else{s.grid=[3,Math.round(s.size[1]/(s.size[0]/4))-1]}
     grid_width.value=s.grid[0];
