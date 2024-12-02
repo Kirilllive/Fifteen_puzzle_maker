@@ -195,7 +195,7 @@ function auto_grid(){
     height.value=s.size[1];
 }
 function auto_style(){
-    var s=setup.puzzle_fifteen,v,i;
+    let s=setup.puzzle_fifteen,v,i;
     if(s.size[1]<s.size[0]){v=Math.round((s.size[0]/s.grid[0])/16)}
     else{v=Math.round((s.size[1]/s.grid[1])/16)}
     d=s.style.split(";");
