@@ -209,7 +209,7 @@ function fifteen_update(){
     ceation_slots();
 }
 function fifteen_build(){
-    var reader=new FileReader();
+    let reader=new FileReader();
     if(file){reader.readAsDataURL(file);}else{alert('Please upload a file with a picture')}
     reader.onload=function(){setup.puzzle_fifteen.art.url=reader.result;gen_file();}
     reader.onerror=function(error){alert('Error: '+error);}
