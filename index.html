@@ -214,7 +214,7 @@ function fifteen_build(){
     reader.onload=function(){setup.puzzle_fifteen.art.url=reader.result;gen_file();}
     reader.onerror=function(error){alert('Error: '+error);}
     function gen_file(){
-        var url="fifteen_puzzle.js";
+        let url="fifteen_puzzle.js";
         let xmlhttp=new XMLHttpRequest();
         xmlhttp.onreadystatechange=function(){
             if(this.readyState==4&&this.status==200){
