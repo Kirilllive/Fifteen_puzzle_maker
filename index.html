@@ -215,7 +215,7 @@ function fifteen_build(){
         let xmlhttp=new XMLHttpRequest();
         xmlhttp.onreadystatechange=function(){
             if(this.readyState==4&&this.status==200){
-                var html="data:text/json;charset=utf-8,"+encodeURIComponent("<!DOCTYPE html>\n<html>\n<head>\n<style>\n body{height:97vh;padding:0;display:grid;align-content:center;justify-content:center;}\n</style>\n</head>\n<body>\n<div id='fifteen'></div>\n<script>\n"+this.responseText.replace("setup.puzzle_fifteen",JSON.stringify(setup.puzzle_fifteen,null,'\t'))+"\n<\/script>\n<\/body>\n<\/html>");
+                let html="data:text/json;charset=utf-8,"+encodeURIComponent("<!DOCTYPE html>\n<html>\n<head>\n<style>\n body{height:97vh;padding:0;display:grid;align-content:center;justify-content:center;}\n</style>\n</head>\n<body>\n<div id='fifteen'></div>\n<script>\n"+this.responseText.replace("setup.puzzle_fifteen",JSON.stringify(setup.puzzle_fifteen,null,'\t'))+"\n<\/script>\n<\/body>\n<\/html>");
                 var a=document.getElementById('dwonload');
                 a.setAttribute("href", html );
                 a.setAttribute("download","index.html");
