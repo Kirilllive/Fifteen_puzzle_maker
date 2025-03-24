@@ -1,7 +1,7 @@
 var p=setup.puzzle_fifteen,freeslot=[],size=[],m=[],o,f=document.getElementById("fifteen");
 ceation_slots();
 function ceation_slots(){
-    size=[p.size[0]/(p.grid[0]+1),p.size[1]/(p.grid[1]+1)]
+    size=[p.size[0]/(p.grid[0]+1),p.size[1]/(p.grid[1]+1)];
     let c=(p.emptySlot)?p.emptySlot:(p.grid[1]+1)*(p.grid[0]+1);
     f.style.width=p.size[0]+'px';
     f.style.height=p.size[1]+'px';
