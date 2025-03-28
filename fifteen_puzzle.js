@@ -36,7 +36,7 @@ function stir_slots(){
         }
         let s=[m[freeslot[0]][freeslot[1]],m[a[0]][a[1]]]
         m[freeslot[0]][freeslot[1]]=s[1];m[a[0]][a[1]]=s[0]
-        freeslot=[a[0],a[1]] 
+        freeslot=[a[0],a[1]];
     }
     for(let y=0;y<=p.grid[1];y++){
         for(let x=0;x<=p.grid[0];x++){
