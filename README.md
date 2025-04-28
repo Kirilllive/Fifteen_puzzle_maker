@@ -15,8 +15,6 @@ The engine code is very flexible for modifications, has many settings and can be
 
 > Demo: https://kirilllive.github.io/Fifteen_puzzle_maker/example.html
 
-[![Patreon](http://odin-interactive.com/img/patron.svg)](https://www.patreon.com/tuesday_js)
-
 
 # Structure
 
