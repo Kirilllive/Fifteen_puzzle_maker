@@ -1,115 +1,257 @@
-var p=setup.puzzle_fifteen,freeslot=[],size=[],m=[],o,f=document.getElementById("fifteen");
-ceation_slots();
-function ceation_slots(){
-    size=[p.size[0]/(p.grid[0]+1),p.size[1]/(p.grid[1]+1)];
-    let c=(p.emptySlot)?p.emptySlot:(p.grid[1]+1)*(p.grid[0]+1);
-    f.style.width=p.size[0]+'px';
-    f.style.height=p.size[1]+'px';
-    f.style.position='relative';
-    if(p.fill){fifteen_resize();window.addEventListener('resize',fifteen_resize,true);}
-    o=1;
-    for(let y=0;y<=p.grid[1];y++){
-        for(let x=0;x<=p.grid[0];x++){
-            if(o!=c){
-                if(!m[y]){m[y]=[]};m[y][x]=o;
-                let e=document.createElement("div");
-                e.id="slot"+o;
-                e.setAttribute("onclick","move_slot("+o+")");
-                e.className="slot";
-                if(p.number){e.innerHTML=o}
-                e.style="background-image:url("+p.art.url+");background-size:"+((p.art.ratio)? p.size[0]+"px auto":"auto "+p.size[1]+"px")+";background-position:-"+(size[0]*x)+"px -"+(size[1]*y)+"px ;width:"+size[0]+"px;height:"+size[1]+"px;top:"+(size[1]*y)+"px;left:"+(size[0]*x)+"px;position:absolute;"+((p.style)?p.style:"")
-                if(p.time){e.style.transitionDuration=p.time+"s"}
-                f.appendChild(e);o++;
-            }else{m[y][x]=0;freeslot=[y,x];o++;}
-        }
-    }stir_slots();
-}
-function stir_slots(){
-    for(let y=0;y<p.diff;y++){
-        let a=[];
-        if((Math.random()*2)>1){
-            a=[freeslot[0]+(-1+Math.round(Math.random()*2)),freeslot[1]];
-            if(a[0]<0){a[0]=a[0]+2}else if(a[0]>p.grid[1]){a[0]=a[0]-2}
-        }else{
-            a=[freeslot[0],freeslot[1]+(-1+Math.round(Math.random()*2))];
-            if(a[1]<0){a[1]=a[1]+2}else if(a[1]>p.grid[0]){a[1]=a[1]-2}
-        }
-        let s=[m[freeslot[0]][freeslot[1]],m[a[0]][a[1]]]
-        m[freeslot[0]][freeslot[1]]=s[1];m[a[0]][a[1]]=s[0]
-        freeslot=[a[0],a[1]];
+/**
+ * 15-Puzzle Game Engine
+ * Refined and Object-Oriented for maximum robustness and performance.
+ */
+class FifteenPuzzle {
+    constructor(config, containerId = 'fifteen') {
+        this.config = config;
+        this.container = document.getElementById(containerId);
+        
+        // Backward compatibility for original grid setup (e.g. grid:[3,4] means 4x5)
+        this.cols = this.config.grid[0] + 1;
+        this.rows = this.config.grid[1] + 1;
+        
+        this.tileWidth = this.config.size[0] / this.cols;
+        this.tileHeight = this.config.size[1] / this.rows;
+        
+        this.matrix = [];
+        this.tiles = {};
+        this.emptyPos = { x: 0, y: 0 };
+        this.isPlaying = false;
+        
+        this.gamepadLoop = null;
+        this.lastGamepadState = false;
+
+        this.init();
     }
-    for(let y=0;y<=p.grid[1];y++){
-        for(let x=0;x<=p.grid[0];x++){
-            if(m[y][x]){
-                let e=document.getElementById("slot"+m[y][x])
-                e.style.left=(x*size[0])+"px";
-                e.style.top =(y*size[1])+"px";
+
+    init() {
+        if (!this.container) return console.error("Puzzle container not found.");
+        
+        // Setup container
+        this.container.innerHTML = "";
+        this.container.style.width = `${this.config.size[0]}px`;
+        this.container.style.height = `${this.config.size[1]}px`;
+        this.container.style.position = 'relative';
+
+        // Setup resize handling
+        if (this.config.fill) {
+            this.handleResize();
+            window.addEventListener('resize', () => this.handleResize(), true);
+        }
+
+        const emptySlotTarget = this.config.emptySlot || (this.rows * this.cols);
+        let idCounter = 1;
+
+        // Generate Grid Matrix and DOM Elements
+        for (let y = 0; y < this.rows; y++) {
+            this.matrix[y] = [];
+            for (let x = 0; x < this.cols; x++) {
+                if (idCounter !== emptySlotTarget) {
+                    this.matrix[y][x] = idCounter;
+                    this.createDOMTile(idCounter, x, y);
+                    idCounter++;
+                } else {
+                    this.matrix[y][x] = 0; // 0 represents the empty slot
+                    this.emptyPos = { x, y };
+                    idCounter++;
+                }
+            }
+        }
+
+        // Shuffle and bind inputs
+        this.shuffle();
+        this.bindInputs();
+    }
+
+    createDOMTile(id, x, y) {
+        const tile = document.createElement("div");
+        tile.className = "slot";
+        
+        if (this.config.number) tile.innerHTML = id;
+
+        // Setup styling safely
+        const bgSize = this.config.art.ratio ? `${this.config.size[0]}px auto` : `auto ${this.config.size[1]}px`;
+        const customStyle = this.config.style ? this.config.style : "";
+        
+        tile.style.cssText = `
+            position: absolute;
+            width: ${this.tileWidth}px;
+            height: ${this.tileHeight}px;
+            background-image: url('${this.config.art.url}');
+            background-size: ${bgSize};
+            background-position: -${this.tileWidth * x}px -${this.tileHeight * y}px;
+            cursor: pointer;
+            ${customStyle}
+        `;
+
+        tile.addEventListener("click", () => this.handleTileClick(id));
+        this.container.appendChild(tile);
+        this.tiles[id] = tile;
+    }
+
+    shuffle() {
+        let prevEmpty = { x: -1, y: -1 };
+        
+        for (let i = 0; i < this.config.diff; i++) {
+            const neighbors = [];
+            const { x, y } = this.emptyPos;
+
+            // Find valid neighbors (avoiding immediate reverse moves)
+            if (x > 0 && prevEmpty.x !== x - 1) neighbors.push({ x: x - 1, y });
+            if (x < this.cols - 1 && prevEmpty.x !== x + 1) neighbors.push({ x: x + 1, y });
+            if (y > 0 && prevEmpty.y !== y - 1) neighbors.push({ x, y: y - 1 });
+            if (y < this.rows - 1 && prevEmpty.y !== y + 1) neighbors.push({ x, y: y + 1 });
+
+            // Pick random neighbor and swap
+            const pick = neighbors[Math.floor(Math.random() * neighbors.length)];
+            prevEmpty = { x: this.emptyPos.x, y: this.emptyPos.y };
+            
+            this.matrix[this.emptyPos.y][this.emptyPos.x] = this.matrix[pick.y][pick.x];
+            this.matrix[pick.y][pick.x] = 0;
+            this.emptyPos = pick;
+        }
+
+        this.updateDOM(false); // Update without animation
+        
+        // Enable transitions after shuffle
+        setTimeout(() => {
+            this.isPlaying = true;
+            Object.values(this.tiles).forEach(tile => {
+                if (this.config.time) tile.style.transition = `all ${this.config.time}s ease`;
+            });
+        }, 50);
+    }
+
+    handleTileClick(id) {
+        if (!this.isPlaying) return;
+
+        let target = null;
+        for (let y = 0; y < this.rows; y++) {
+            for (let x = 0; x < this.cols; x++) {
+                if (this.matrix[y][x] === id) target = { x, y };
+            }
+        }
+        if (target) this.moveTile(target.x, target.y);
+    }
+
+    // Allows sliding multiple blocks in the same row/column at once
+    moveTile(x, y) {
+        const ex = this.emptyPos.x;
+        const ey = this.emptyPos.y;
+
+        if (x === ex && y === ey) return; // Clicked empty slot
+
+        if (x === ex) {
+            // Vertical shift
+            const dir = y > ey ? 1 : -1;
+            for (let currY = ey; currY !== y; currY += dir) {
+                this.matrix[currY][ex] = this.matrix[currY + dir][ex];
+            }
+            this.matrix[y][x] = 0;
+            this.emptyPos.y = y;
+        } else if (y === ey) {
+            // Horizontal shift
+            const dir = x > ex ? 1 : -1;
+            for (let currX = ex; currX !== x; currX += dir) {
+                this.matrix[ey][currX] = this.matrix[ey][currX + dir];
+            }
+            this.matrix[y][x] = 0;
+            this.emptyPos.x = x;
+        } else {
+            return; // Not in the same row or column
+        }
+
+        this.updateDOM(true);
+        this.checkWin();
+    }
+
+    updateDOM(animate) {
+        for (let y = 0; y < this.rows; y++) {
+            for (let x = 0; x < this.cols; x++) {
+                const tileId = this.matrix[y][x];
+                if (tileId !== 0) {
+                    const tile = this.tiles[tileId];
+                    tile.style.left = `${x * this.tileWidth}px`;
+                    tile.style.top = `${y * this.tileHeight}px`;
+                }
             }
         }
     }
-}
-function move_slot(s){
-    let z=0,e,a=[],k,j;
-    function move(y,x,h,w){
-        j=m[y][x];
-        e=document.getElementById("slot"+j);
-        e.style.left=((x+w)*size[0])+"px";
-        e.style.top =((y+h)*size[1])+"px";
-        m[y][x]=k;k=j;
-    }
-    for(let y=0;y<p.grid[1]+1;y++){
-        for(let x=0;x<p.grid[0]+1;x++){
-            if(m[y][x]==s){
-                a=[y,x];k=0;
-                if(freeslot[0]==a[0]){
-                    if(freeslot[1]>a[1]){for(z=0;z<freeslot[1]-a[1];z++){move(a[0],a[1]+z,0,+1)}}
-                    else if(freeslot[1]<a[1]){for(z=0;z<a[1]-freeslot[1];z++){move(a[0],a[1]-z,0,-1)}}
-                    m[freeslot[0]][freeslot[1]]=k;freeslot=[a[0],a[1]];s=false;break;
-                }else if(freeslot[1]==a[1]){
-                    if(freeslot[0]>a[0]){for(z=0;z<freeslot[0]-a[0];z++){ move(a[0]+z,a[1],+1,0)}}
-                    else if(freeslot[0]<a[0]){for(z=0;z<a[0]-freeslot[0];z++){move(a[0]-z,a[1],-1,0)}}
-                    m[freeslot[0]][freeslot[1]]=k;freeslot=[a[0],a[1]];s=false;break;
+
+    checkWin() {
+        let expectedId = 1;
+        const max = this.rows * this.cols;
+
+        for (let y = 0; y < this.rows; y++) {
+            for (let x = 0; x < this.cols; x++) {
+                if (expectedId === max) {
+                    if (this.matrix[y][x] !== 0) return; // Empty slot isn't at the end
+                } else {
+                    if (this.matrix[y][x] !== expectedId) return; // Block out of place
                 }
-            }if(!s){break;}
-        }if(!s){break;}
-    }check_slots();
-}
-function check_slots(){
-    let check=1;
-    for(let y=0;y<=p.grid[1];y++){
-        for(let x=0;x<=p.grid[0];x++){
-            if(m[y][x]==0||check==m[y][x]){check++}else{break;}
-        }
-    }if(check==o){setTimeout(()=>{alert('win') },((p.time)?p.time*1000:0));} // <-- alert('win') script that runs at the end of the game
-}
-function fifteen_resize(){
-    let rect=f.parentNode.getBoundingClientRect();
-    if((p.size[0]/p.size[1])<(rect.width/rect.height)){f.style.transform='scale('+(rect.height/p.size[1])+')'}
-    else{f.style.transform='scale('+(rect.width/p.size[0])+')'}
-}
-if(p.keyBoard){document.addEventListener("keydown",function(e){
-    e=e.keyCode;
-         if(e==37){move_slot(m[freeslot[0]][freeslot[1]+1]);}
-    else if(e==39){move_slot(m[freeslot[0]][freeslot[1]-1]);}
-    else if(e==38){move_slot(m[freeslot[0]+1][freeslot[1]]);}
-    else if(e==40){move_slot(m[freeslot[0]-1][freeslot[1]]);}
-})}
-let gamepad,gamepadPress;
-if(p.gamePad){window.addEventListener('gamepadconnected',function(e){
-        const update=()=>{
-            for (gamepad of navigator.getGamepads()){
-                if (!gamepad) continue;
-                const statenow=gamepad.buttons.some(btn=>btn.pressed);
-                if (gamepadPress!==statenow){
-                    gamepadPress=statenow;
-                         if(gamepad.buttons[12].pressed&&m[freeslot[0]+1]){move_slot(m[freeslot[0]+1][freeslot[1]]);}
-                    else if(gamepad.buttons[14].pressed&&m[freeslot[0]])  {move_slot(m[freeslot[0]][freeslot[1]+1]);}
-                    else if(gamepad.buttons[15].pressed&&m[freeslot[0]])  {move_slot(m[freeslot[0]][freeslot[1]-1]);}
-                    else if(gamepad.buttons[13].pressed&&m[freeslot[0]-1]){move_slot(m[freeslot[0]-1][freeslot[1]]);}
-                }
+                expectedId++;
             }
-            requestAnimationFrame(update);
-        };update();
-    });
+        }
+
+        // Win state logic
+        this.isPlaying = false;
+        setTimeout(() => {
+            alert('win');
+        }, (this.config.time ? this.config.time * 1000 : 50));
+    }
+
+    handleResize() {
+        const rect = this.container.parentNode.getBoundingClientRect();
+        const scale = Math.min(rect.width / this.config.size[0], rect.height / this.config.size[1]);
+        this.container.style.transform = `scale(${scale})`;
+        this.container.style.transformOrigin = "center center";
+    }
+
+    bindInputs() {
+        // Keyboard Support
+        if (this.config.keyBoard) {
+            document.addEventListener("keydown", (e) => {
+                if (!this.isPlaying) return;
+                const { x, y } = this.emptyPos;
+                
+                // Arrows pull tiles *into* the empty slot securely
+                if (e.keyCode === 37 && x < this.cols - 1) this.moveTile(x + 1, y); // Left
+                else if (e.keyCode === 39 && x > 0) this.moveTile(x - 1, y);        // Right
+                else if (e.keyCode === 38 && y < this.rows - 1) this.moveTile(x, y + 1); // Up
+                else if (e.keyCode === 40 && y > 0) this.moveTile(x, y - 1);        // Down
+            });
+        }
+
+        // Gamepad Support
+        if (this.config.gamePad) {
+            window.addEventListener('gamepadconnected', () => {
+                const updateGamepad = () => {
+                    const gamepads = navigator.getGamepads();
+                    for (let gamepad of gamepads) {
+                        if (!gamepad) continue;
+                        const isPressed = gamepad.buttons.some(btn => btn.pressed);
+                        
+                        if (this.lastGamepadState !== isPressed && this.isPlaying) {
+                            this.lastGamepadState = isPressed;
+                            const { x, y } = this.emptyPos;
+
+                            // Standard D-Pad Mapping (Safely accessing bounds)
+                            if (gamepad.buttons[12].pressed && y < this.rows - 1) this.moveTile(x, y + 1); // Up
+                            else if (gamepad.buttons[13].pressed && y > 0) this.moveTile(x, y - 1);        // Down
+                            else if (gamepad.buttons[14].pressed && x < this.cols - 1) this.moveTile(x + 1, y); // Left
+                            else if (gamepad.buttons[15].pressed && x > 0) this.moveTile(x - 1, y);        // Right
+                        }
+                    }
+                    this.gamepadLoop = requestAnimationFrame(updateGamepad);
+                };
+                updateGamepad();
+            });
+        }
+    }
 }
 
+// Automatically start game if the global setup object exists (backward compatibility)
+if (typeof setup !== 'undefined' && setup.puzzle_fifteen) {
+    window.gameInstance = new FifteenPuzzle(setup.puzzle_fifteen, "fifteen");
+}
