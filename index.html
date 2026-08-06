@@ -4,24 +4,28 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Fifteen Puzzle Maker Pro</title>
-    <meta name="theme-color" content="#c4cebb">
+    <meta name="theme-color" content="#4f46e5">
     <meta name="description" content="A robust implementation of the classic mini-game Fifteen Sliding Puzzle.">
     <style>
         :root {
-            --primary: #c4cebb;
-            --primary-hover: #b3c0a8;
-            --bg: #dfebd5;
+            --primary: #4f46e5;
+            --primary-hover: #4338ca;
+            --success: #10b981;
+            --success-hover: #059669;
+            --bg: #f8fafc;
             --panel: #ffffff;
-            --text: #333333;
+            --text: #0f172a;
+            --text-muted: #64748b;
+            --border: #e2e8f0;
+            --radius: 12px;
+            --shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
         }
         
         * {
             box-sizing: border-box;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            font-family: 'Inter', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             margin: 0;
             padding: 0;
-            user-select: none;
-            outline: none;
         }
 
         body {
@@ -34,29 +38,43 @@
 
         /* Sidebar Styling */
         .sidebar {
-            width: 320px;
+            width: 340px;
             background-color: var(--panel);
-            box-shadow: 4px 0 24px rgba(0, 0, 0, 0.08);
+            border-right: 1px solid var(--border);
             display: flex;
             flex-direction: column;
             z-index: 10;
             overflow-y: auto;
+            box-shadow: 4px 0 24px rgba(0, 0, 0, 0.04);
         }
 
         .sidebar-header {
-            padding: 20px;
-            background-color: var(--primary);
-            color: white;
-            text-align: center;
-            font-size: 18px;
-            font-weight: bold;
+            padding: 24px 20px;
+            background-color: var(--panel);
+            border-bottom: 1px solid var(--border);
+            text-align: left;
+            position: sticky;
+            top: 0;
+            z-index: 10;
+        }
+
+        .sidebar-header h1 {
+            font-size: 20px;
+            font-weight: 700;
+            color: var(--text);
+            margin-bottom: 4px;
+        }
+        
+        .sidebar-header p {
+            font-size: 13px;
+            color: var(--text-muted);
         }
 
         .settings-group {
-            padding: 16px 20px;
+            padding: 20px;
             display: flex;
             flex-direction: column;
-            gap: 12px;
+            gap: 16px;
         }
 
         .control-row {
@@ -66,27 +84,33 @@
         }
 
         .control-row label {
-            font-size: 13px;
+            font-size: 14px;
             font-weight: 500;
+            color: var(--text);
         }
 
         .input-text {
-            border: 1px solid #ddd;
-            border-radius: 6px;
-            padding: 6px 10px;
-            font-size: 13px;
-            width: 120px;
-            transition: border 0.2s;
-            user-select: text;
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            padding: 8px 12px;
+            font-size: 14px;
+            width: 130px;
+            transition: all 0.2s;
+            color: var(--text);
+            background: var(--bg);
+            outline: none;
         }
 
         .input-text:focus {
             border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(79, 70, 229, 0.15);
+            background: var(--panel);
         }
 
         .input-full {
             width: 100%;
-            margin-top: 5px;
+            margin-top: 8px;
+            resize: vertical;
         }
 
         /* Button Styling */
@@ -97,18 +121,23 @@
             border-radius: 8px;
             padding: 12px;
             font-size: 14px;
-            font-weight: bold;
+            font-weight: 600;
             cursor: pointer;
             text-align: center;
-            transition: background 0.2s, transform 0.1s;
+            transition: all 0.2s;
             width: 100%;
-            margin-top: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
         }
 
         .btn:hover { background-color: var(--primary-hover); }
-        .btn:active { transform: scale(0.98); }
-        .btn-generate { background-color: #8fb177; }
-        .btn-generate:hover { background-color: #7d9c67; }
+        .btn:active { transform: translateY(1px); }
+        .btn-outline { background-color: transparent; border: 1px solid var(--border); color: var(--text); }
+        .btn-outline:hover { background-color: var(--bg); }
+        .btn-generate { background-color: var(--success); margin-top: 8px; }
+        .btn-generate:hover { background-color: var(--success-hover); }
 
         /* Toggle Switch Styling */
         .switch {
@@ -124,7 +153,7 @@
             position: absolute;
             cursor: pointer;
             top: 0; left: 0; right: 0; bottom: 0;
-            background-color: #ccc;
+            background-color: #cbd5e1;
             transition: .3s;
             border-radius: 24px;
         }
@@ -137,6 +166,7 @@
             background-color: white;
             transition: .3s;
             border-radius: 50%;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
         }
         
         input:checked + .slider { background-color: var(--primary); }
@@ -149,68 +179,128 @@
             align-items: center;
             justify-content: center;
             position: relative;
-            padding: 20px;
+            padding: 40px;
+            background-image: radial-gradient(#e2e8f0 1px, transparent 1px);
+            background-size: 20px 20px;
         }
 
         #drop-zone {
             position: absolute;
-            top: 20px; left: 20px; right: 20px; bottom: 20px;
+            top: 40px; left: 40px; right: 40px; bottom: 40px;
             border: 3px dashed var(--primary);
-            border-radius: 16px;
+            border-radius: 24px;
             display: flex;
+            flex-direction: column;
             align-items: center;
             justify-content: center;
-            font-size: 24px;
-            color: #888;
-            background: rgba(255,255,255,0.4);
+            font-size: 20px;
+            font-weight: 600;
+            color: var(--primary);
+            background: rgba(255, 255, 255, 0.8);
+            backdrop-filter: blur(4px);
             z-index: 1;
             pointer-events: none;
             opacity: 0;
-            transition: opacity 0.2s;
+            transition: all 0.2s;
         }
 
-        #drop-zone.active { opacity: 1; }
-        #fifteen-preview { z-index: 2; box-shadow: 0 10px 30px rgba(0,0,0,0.2); }
+        #drop-zone.active { opacity: 1; transform: scale(1.02); }
+        
+        #fifteen-preview {
+            z-index: 2;
+            box-shadow: var(--shadow);
+            border-radius: 8px;
+            overflow: hidden;
+            background-color: #fff;
+            transform-origin: center center;
+        }
+        
+        .empty-state {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 16px;
+            color: var(--text-muted);
+            text-align: center;
+            z-index: 0;
+            position: absolute;
+        }
         
         input[type="file"] { display: none; }
+        hr { border: 0; border-top: 1px solid var(--border); margin: 8px 0; }
+
+        /* Toast Notifications */
+        #toast-container {
+            position: fixed;
+            bottom: 24px;
+            right: 24px;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            z-index: 100;
+        }
+
+        .toast {
+            background: var(--text);
+            color: white;
+            padding: 12px 24px;
+            border-radius: 8px;
+            font-size: 14px;
+            font-weight: 500;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+            animation: slideIn 0.3s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+        }
+
+        @keyframes slideIn {
+            from { transform: translateX(100%); opacity: 0; }
+            to { transform: translateX(0); opacity: 1; }
+        }
     </style>
 </head>
 <body>
 
     <!-- Sidebar Settings -->
-    <div class="sidebar">
-        <div class="sidebar-header">Puzzle Maker Pro</div>
+    <aside class="sidebar">
+        <div class="sidebar-header">
+            <h1>Puzzle Maker Pro</h1>
+            <p>Configure & export your game</p>
+        </div>
         
         <div class="settings-group">
-            <button class="btn" onclick="document.getElementById('img_file').click();">📁 Load Image</button>
-            <input id="img_file" type="file" accept="image/png, image/gif, image/jpeg, image/webp" />
+            <button class="btn btn-outline" onclick="document.getElementById('img_file').click();">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4M17 8l-5-5-5 5M12 3v12"/></svg>
+                Upload Image
+            </button>
+            <input id="img_file" type="file" accept="image/png, image/jpeg, image/webp" />
             
+            <hr>
+
             <div class="control-row">
                 <label>Difficulty (Shuffles)</label>
-                <input type="number" id="diff" class="input-text" value="100">
+                <input type="number" id="diff" class="input-text" value="150" min="10" max="1000">
             </div>
             <div class="control-row">
-                <label>Width (px)</label>
-                <input type="number" id="width" class="input-text" value="400">
+                <label>Grid Columns (X)</label>
+                <input type="number" id="grid_x" class="input-text" value="3" min="2" max="10">
             </div>
             <div class="control-row">
-                <label>Height (px)</label>
-                <input type="number" id="height" class="input-text" value="400">
+                <label>Grid Rows (Y)</label>
+                <input type="number" id="grid_y" class="input-text" value="3" min="2" max="10">
             </div>
             <div class="control-row">
-                <label>Grid X (Columns)</label>
-                <input type="number" id="grid_x" class="input-text" value="3">
+                <label>Game Width (px)</label>
+                <input type="number" id="width" class="input-text" value="500" min="200" max="1200">
             </div>
             <div class="control-row">
-                <label>Grid Y (Rows)</label>
-                <input type="number" id="grid_y" class="input-text" value="3">
+                <label>Game Height (px)</label>
+                <input type="number" id="height" class="input-text" value="500" min="200" max="1200">
             </div>
             <div class="control-row">
-                <label>Move Time (sec)</label>
-                <input type="number" step="0.1" id="time" class="input-text" value="0.2">
+                <label>Move Speed (sec)</label>
+                <input type="number" step="0.1" id="time" class="input-text" value="0.2" min="0.05" max="1">
             </div>
             
-            <hr style="border: 0; border-top: 1px solid #eee; margin: 5px 0;">
+            <hr>
 
             <div class="control-row">
                 <label>Show Numbers</label>
@@ -222,141 +312,257 @@
             </div>
             
             <div>
-                <label style="font-size: 13px; font-weight: 500;">Tile Custom CSS</label>
-                <textarea id="slot_style" class="input-text input-full" rows="3">background-color:#c4cebb;display:grid;justify-items:center;align-items:center;font-family:Arial;color:#fff;border-radius:8px;font-size:24px;box-shadow:inset 0 0 10px rgba(0,0,0,0.2);</textarea>
+                <label style="font-size: 14px; font-weight: 500;">Tile Custom CSS</label>
+                <textarea id="slot_style" class="input-text input-full" rows="3">background-color:#4f46e5; display:grid; justify-items:center; align-items:center; color:#fff; font-size:24px; font-weight:bold; box-shadow:inset 0 0 0 1px rgba(255,255,255,0.2), inset 0 0 20px rgba(0,0,0,0.1); border-radius:4px;</textarea>
             </div>
 
-            <button class="btn" onclick="updatePreview()">🔄 Refresh Preview</button>
-            <button class="btn btn-generate" onclick="generateGame()">⬇️ Download HTML Game</button>
+            <button class="btn btn-generate" onclick="generateGame()">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4M7 10l5 5 5-5M12 15V3"/></svg>
+                Download HTML Game
+            </button>
         </div>
-    </div>
+    </aside>
 
     <!-- Main Preview Area -->
-    <div class="preview-area" id="preview-area">
-        <div id="drop-zone">Drop Image Here</div>
+    <main class="preview-area" id="preview-area">
+        <div class="empty-state" id="empty-state">
+            <svg width="64" height="64" viewBox="0 0 24 24" fill="none" stroke="#cbd5e1" stroke-width="1.5"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>
+            <h2>No Image Loaded</h2>
+            <p>Upload an image or drag & drop one here to preview.</p>
+        </div>
+        <div id="drop-zone">Drop Image Here to Load</div>
         <div id="fifteen-preview"></div>
-    </div>
+    </main>
+
+    <!-- Toast Notifications -->
+    <div id="toast-container"></div>
 
 <script>
 "use strict";
 
-const config = {
-    diff: 100,
-    size: [400, 400],
-    grid: [3, 3],
-    fill: true,
-    number: false,
-    art: { url: "", ratio: false },
-    time: 0.2,
-    style: ""
-};
-
-let activeFile = null;
-
-// --- Event Listeners ---
-document.getElementById('img_file').addEventListener('change', (e) => handleFile(e.target.files[0]));
-
-['diff', 'width', 'height', 'grid_x', 'grid_y', 'time'].forEach(id => {
-    document.getElementById(id).addEventListener('change', updateConfigFromUI);
-});
-['show_numbers', 'fill_screen'].forEach(id => {
-    document.getElementById(id).addEventListener('change', updateConfigFromUI);
-});
-document.getElementById('slot_style').addEventListener('change', updateConfigFromUI);
-
-// --- Drag & Drop ---
-const previewArea = document.getElementById('preview-area');
-const dropZone = document.getElementById('drop-zone');
-
-previewArea.addEventListener('dragover', (e) => { e.preventDefault(); dropZone.classList.add('active'); });
-previewArea.addEventListener('dragleave', () => dropZone.classList.remove('active'));
-previewArea.addEventListener('drop', (e) => {
-    e.preventDefault();
-    dropZone.classList.remove('active');
-    if (e.dataTransfer.files.length) handleFile(e.dataTransfer.files[0]);
-});
-
-// --- Logic ---
-function handleFile(file) {
-    if (!file || !file.type.startsWith('image/')) return alert("Please upload a valid image file.");
-    activeFile = file;
-    const url = window.URL.createObjectURL(file);
-    config.art.url = url;
-    
-    const img = new Image();
-    img.onload = () => {
-        config.size = [img.width, img.height];
-        document.getElementById('width').value = img.width;
-        document.getElementById('height').value = img.height;
-        autoGrid(img.width, img.height);
-        updatePreview();
+const App = (() => {
+    // Application State
+    const state = {
+        activeFile: null,
+        imgBlobUrl: "",
+        config: {
+            diff: 150,
+            size: [500, 500],
+            grid: [3, 3],
+            fill: true,
+            number: false,
+            time: 0.2,
+            style: ""
+        }
     };
-    img.src = url;
-}
 
-function autoGrid(w, h) {
-    const ratio = w / h;
-    let gx = 3, gy = 3;
-    if (ratio > 1.2) { gx = 4; gy = 3; }
-    else if (ratio < 0.8) { gx = 3; gy = 4; }
-    
-    document.getElementById('grid_x').value = gx;
-    document.getElementById('grid_y').value = gy;
-    config.grid = [gx, gy];
-}
+    // DOM Elements
+    const els = {
+        previewArea: document.getElementById('preview-area'),
+        dropZone: document.getElementById('drop-zone'),
+        emptyState: document.getElementById('empty-state'),
+        container: document.getElementById('fifteen-preview'),
+        toastContainer: document.getElementById('toast-container'),
+        inputs: {
+            file: document.getElementById('img_file'),
+            diff: document.getElementById('diff'),
+            width: document.getElementById('width'),
+            height: document.getElementById('height'),
+            grid_x: document.getElementById('grid_x'),
+            grid_y: document.getElementById('grid_y'),
+            time: document.getElementById('time'),
+            show_numbers: document.getElementById('show_numbers'),
+            fill_screen: document.getElementById('fill_screen'),
+            slot_style: document.getElementById('slot_style')
+        }
+    };
 
-function updateConfigFromUI() {
-    config.diff = parseInt(document.getElementById('diff').value) || 100;
-    config.size = [parseInt(document.getElementById('width').value), parseInt(document.getElementById('height').value)];
-    config.grid = [parseInt(document.getElementById('grid_x').value), parseInt(document.getElementById('grid_y').value)];
-    config.time = parseFloat(document.getElementById('time').value) || 0.2;
-    config.number = document.getElementById('show_numbers').checked;
-    config.fill = document.getElementById('fill_screen').checked;
-    config.style = document.getElementById('slot_style').value;
-    updatePreview();
-}
+    // Toast Notification System
+    function showToast(message, type = 'info') {
+        const toast = document.createElement('div');
+        toast.className = 'toast';
+        toast.textContent = message;
+        if(type === 'error') toast.style.backgroundColor = '#ef4444';
+        if(type === 'success') toast.style.backgroundColor = '#10b981';
+        
+        els.toastContainer.appendChild(toast);
+        setTimeout(() => {
+            toast.style.opacity = '0';
+            toast.style.transform = 'translateX(100%)';
+            toast.style.transition = 'all 0.3s ease';
+            setTimeout(() => toast.remove(), 300);
+        }, 3000);
+    }
 
-function updatePreview() {
-    if (!config.art.url) return;
-    updateConfigFromUI(); // Ensure sync
-    
-    const container = document.getElementById('fifteen-preview');
-    container.innerHTML = "";
-    container.style.width = config.size[0] + 'px';
-    container.style.height = config.size[1] + 'px';
-    container.style.position = 'relative';
-    container.style.transform = `scale(${Math.min(1, (window.innerHeight - 80) / config.size[1], (window.innerWidth - 360) / config.size[0])})`;
+    // Initialization & Event Binding
+    function init() {
+        els.inputs.file.addEventListener('change', (e) => handleFile(e.target.files[0]));
+        
+        const textInputs = ['diff', 'width', 'height', 'grid_x', 'grid_y', 'time'];
+        textInputs.forEach(id => {
+            els.inputs[id].addEventListener('input', () => {
+                validateInputs();
+                updatePreview();
+            });
+        });
 
-    const slotW = config.size[0] / config.grid[0];
-    const slotH = config.size[1] / config.grid[1];
+        ['show_numbers', 'fill_screen'].forEach(id => {
+            els.inputs[id].addEventListener('change', updatePreview);
+        });
+        
+        els.inputs.slot_style.addEventListener('input', updatePreview);
 
-    for (let y = 0; y < config.grid[1]; y++) {
-        for (let x = 0; x < config.grid[0]; x++) {
-            if (x === config.grid[0] - 1 && y === config.grid[1] - 1) continue; // Empty slot
-            
-            const slot = document.createElement('div');
-            slot.style.cssText = `position:absolute; width:${slotW}px; height:${slotH}px; left:${x * slotW}px; top:${y * slotH}px; cursor:pointer; background-image:url(${config.art.url}); background-size:${config.size[0]}px ${config.size[1]}px; background-position:-${x * slotW}px -${y * slotH}px; transition:all ${config.time}s ease; box-sizing:border-box; ${config.style}`;
-            
-            if (config.number) slot.innerText = (y * config.grid[0] + x + 1);
-            container.appendChild(slot);
+        // Drag & Drop
+        els.previewArea.addEventListener('dragover', (e) => { e.preventDefault(); els.dropZone.classList.add('active'); });
+        els.previewArea.addEventListener('dragleave', () => els.dropZone.classList.remove('active'));
+        els.previewArea.addEventListener('drop', (e) => {
+            e.preventDefault();
+            els.dropZone.classList.remove('active');
+            if (e.dataTransfer.files.length) handleFile(e.dataTransfer.files[0]);
+        });
+
+        window.addEventListener('resize', () => {
+            if (state.imgBlobUrl) scalePreview();
+        });
+    }
+
+    // Input Validation to prevent game-breaking configurations
+    function validateInputs() {
+        if(parseInt(els.inputs.grid_x.value) < 2) els.inputs.grid_x.value = 2;
+        if(parseInt(els.inputs.grid_y.value) < 2) els.inputs.grid_y.value = 2;
+        if(parseInt(els.inputs.diff.value) < 1) els.inputs.diff.value = 1;
+        if(parseInt(els.inputs.width.value) < 100) els.inputs.width.value = 100;
+        if(parseInt(els.inputs.height.value) < 100) els.inputs.height.value = 100;
+    }
+
+    // File Handling
+    function handleFile(file) {
+        if (!file || !file.type.startsWith('image/')) {
+            return showToast("Please upload a valid image file (PNG, JPG, WEBP).", "error");
+        }
+        state.activeFile = file;
+        state.imgBlobUrl = window.URL.createObjectURL(file);
+        els.emptyState.style.display = 'none';
+        
+        const img = new Image();
+        img.onload = () => {
+            els.inputs.width.value = img.width;
+            els.inputs.height.value = img.height;
+            autoGrid(img.width, img.height);
+            updatePreview();
+            showToast("Image loaded successfully!", "success");
+        };
+        img.src = state.imgBlobUrl;
+    }
+
+    // Auto-calculate optimal grid based on aspect ratio
+    function autoGrid(w, h) {
+        const ratio = w / h;
+        let gx = 3, gy = 3;
+        if (ratio > 1.3) { gx = 4; gy = 3; }
+        else if (ratio < 0.75) { gx = 3; gy = 4; }
+        
+        els.inputs.grid_x.value = gx;
+        els.inputs.grid_y.value = gy;
+    }
+
+    // Update internal config from UI
+    function syncConfig() {
+        state.config.diff = parseInt(els.inputs.diff.value) || 150;
+        state.config.size = [parseInt(els.inputs.width.value) || 500, parseInt(els.inputs.height.value) || 500];
+        state.config.grid = [parseInt(els.inputs.grid_x.value) || 3, parseInt(els.inputs.grid_y.value) || 3];
+        state.config.time = parseFloat(els.inputs.time.value) || 0.2;
+        state.config.number = els.inputs.show_numbers.checked;
+        state.config.fill = els.inputs.fill_screen.checked;
+        state.config.style = els.inputs.slot_style.value;
+    }
+
+    // Center and scale the preview based on viewport
+    function scalePreview() {
+        const areaW = els.previewArea.clientWidth - 80;
+        const areaH = els.previewArea.clientHeight - 80;
+        const scale = Math.min(1, areaW / state.config.size[0], areaH / state.config.size[1]);
+        els.container.style.transform = `scale(${scale})`;
+    }
+
+    // Render Preview
+    function updatePreview() {
+        if (!state.imgBlobUrl) return;
+        syncConfig();
+        
+        els.container.innerHTML = "";
+        els.container.style.width = state.config.size[0] + 'px';
+        els.container.style.height = state.config.size[1] + 'px';
+        els.container.style.position = 'relative';
+        
+        scalePreview();
+
+        const slotW = state.config.size[0] / state.config.grid[0];
+        const slotH = state.config.size[1] / state.config.grid[1];
+
+        // Generate tiles
+        for (let y = 0; y < state.config.grid[1]; y++) {
+            for (let x = 0; x < state.config.grid[0]; x++) {
+                if (x === state.config.grid[0] - 1 && y === state.config.grid[1] - 1) continue; // Leave last slot empty
+                
+                const slot = document.createElement('div');
+                slot.style.cssText = `
+                    position: absolute;
+                    width: ${slotW}px;
+                    height: ${slotH}px;
+                    left: ${x * slotW}px;
+                    top: ${y * slotH}px;
+                    background-image: url(${state.imgBlobUrl});
+                    background-size: ${state.config.size[0]}px ${state.config.size[1]}px;
+                    background-position: -${x * slotW}px -${y * slotH}px;
+                    box-sizing: border-box;
+                    ${state.config.style}
+                `;
+                
+                if (state.config.number) {
+                    slot.innerText = (y * state.config.grid[0] + x + 1);
+                }
+                els.container.appendChild(slot);
+            }
         }
     }
-}
 
-// --- Generator & Exporter ---
-function generateGame() {
-    if (!activeFile) return alert("Please upload an image first.");
+    // Compress & Resize image to Base64 for the exported file
+    function getOptimizedBase64(url, targetW, targetH) {
+        return new Promise((resolve) => {
+            const img = new Image();
+            img.crossOrigin = "Anonymous";
+            img.onload = () => {
+                const canvas = document.createElement('canvas');
+                canvas.width = targetW;
+                canvas.height = targetH;
+                const ctx = canvas.getContext('2d');
+                ctx.imageSmoothingEnabled = true;
+                ctx.imageSmoothingQuality = 'high';
+                ctx.drawImage(img, 0, 0, targetW, targetH);
+                resolve(canvas.toDataURL('image/jpeg', 0.9));
+            };
+            img.src = url;
+        });
+    }
 
-    const reader = new FileReader();
-    reader.readAsDataURL(activeFile);
-    reader.onload = () => {
-        const base64Img = reader.result;
+    // Generator & Exporter
+    async function generateGame() {
+        if (!state.activeFile) {
+            return showToast("Please upload an image first before exporting.", "error");
+        }
         
-        // Deep copy config and replace URL with Base64 for offline portability
-        const exportConfig = JSON.parse(JSON.stringify(config));
-        exportConfig.art.url = base64Img;
+        syncConfig();
+        showToast("Generating optimized game file...", "info");
 
-        // The Self-Contained Engine Script Template
+        // Convert image to a highly optimized Base64 string matched to game resolution
+        const base64Img = await getOptimizedBase64(state.imgBlobUrl, state.config.size[0], state.config.size[1]);
+        
+        const exportConfig = JSON.parse(JSON.stringify(state.config));
+        exportConfig.art = { url: base64Img };
+
+        // --- EXPORTED ENGINE SCRIPT ---
+        // Uses instant math shuffling to prevent long loading animations
         const engineScript = `
             const config = ${JSON.stringify(exportConfig)};
             class FifteenPuzzle {
@@ -367,7 +573,7 @@ function generateGame() {
                     this.emptyTile = { x: cfg.grid[0] - 1, y: cfg.grid[1] - 1 };
                     this.slotW = cfg.size[0] / cfg.grid[0];
                     this.slotH = cfg.size[1] / cfg.grid[1];
-                    this.isShuffling = false;
+                    this.isActive = true;
                     this.init();
                 }
 
@@ -377,9 +583,12 @@ function generateGame() {
                     this.container.style.position = 'relative';
                     
                     if (this.cfg.fill) {
-                        const scale = Math.min(window.innerWidth / this.cfg.size[0], window.innerHeight / this.cfg.size[1]) * 0.95;
-                        this.container.style.transform = \`scale(\${scale})\`;
-                        window.addEventListener('resize', () => this.init());
+                        const resize = () => {
+                            const scale = Math.min(window.innerWidth / (this.cfg.size[0] + 40), window.innerHeight / (this.cfg.size[1] + 40));
+                            this.container.style.transform = \`scale(\${scale})\`;
+                        };
+                        window.addEventListener('resize', resize);
+                        resize();
                     }
 
                     let count = 1;
@@ -388,67 +597,89 @@ function generateGame() {
                             if (x === this.cfg.grid[0] - 1 && y === this.cfg.grid[1] - 1) continue;
 
                             const tile = document.createElement('div');
-                            tile.style.cssText = \`position:absolute; width:\${this.slotW}px; height:\${this.slotH}px; cursor:pointer; background-image:url('\${this.cfg.art.url}'); background-size:\${this.cfg.size[0]}px \${this.cfg.size[1]}px; background-position:-\${x * this.slotW}px -\${y * this.slotH}px; transition:transform \${this.cfg.time}s ease; box-sizing:border-box; \${this.cfg.style}\`;
+                            tile.style.cssText = \`position:absolute; width:\${this.slotW}px; height:\${this.slotH}px; cursor:pointer; background-image:url('\${this.cfg.art.url}'); background-size:\${this.cfg.size[0]}px \${this.cfg.size[1]}px; background-position:-\${x * this.slotW}px -\${y * this.slotH}px; box-sizing:border-box; user-select:none; \${this.cfg.style}\`;
                             
                             if (this.cfg.number) tile.innerText = count++;
                             
                             const tileData = { dom: tile, cx: x, cy: y, origX: x, origY: y };
                             this.tiles.push(tileData);
-                            this.updateTilePos(tileData);
                             
                             tile.addEventListener('click', () => this.moveTile(tileData));
                             this.container.appendChild(tile);
                         }
                     }
-                    this.shuffle();
+                    
+                    // Instant mathematical shuffle guaranteeing solvability
+                    this.instantShuffle();
                 }
 
-                updateTilePos(t) {
+                updateTilePos(t, animate) {
+                    t.dom.style.transition = animate ? \`transform \${this.cfg.time}s cubic-bezier(0.2, 0.8, 0.2, 1)\` : 'none';
                     t.dom.style.transform = \`translate(\${t.cx * this.slotW}px, \${t.cy * this.slotH}px)\`;
                 }
 
                 moveTile(t) {
+                    if(!this.isActive) return;
                     const dx = Math.abs(t.cx - this.emptyTile.x);
                     const dy = Math.abs(t.cy - this.emptyTile.y);
                     if ((dx === 1 && dy === 0) || (dx === 0 && dy === 1)) {
                         const tempX = this.emptyTile.x; const tempY = this.emptyTile.y;
                         this.emptyTile.x = t.cx; this.emptyTile.y = t.cy;
                         t.cx = tempX; t.cy = tempY;
-                        this.updateTilePos(t);
-                        if (!this.isShuffling) this.checkWin();
+                        this.updateTilePos(t, true);
+                        this.checkWin();
                     }
                 }
 
-                shuffle() {
-                    this.isShuffling = true;
-                    this.container.style.pointerEvents = 'none';
+                instantShuffle() {
                     let moves = this.cfg.diff;
                     let lastTile = null;
 
-                    const step = () => {
-                        if (moves <= 0) {
-                            this.isShuffling = false;
-                            this.container.style.pointerEvents = 'auto';
-                            return;
-                        }
+                    // Compute random walk
+                    while(moves > 0) {
                         const neighbors = this.tiles.filter(t => 
                             ((Math.abs(t.cx - this.emptyTile.x) === 1 && t.cy === this.emptyTile.y) || 
                             (Math.abs(t.cy - this.emptyTile.y) === 1 && t.cx === this.emptyTile.x)) && t !== lastTile
                         );
                         const pick = neighbors[Math.floor(Math.random() * neighbors.length)];
                         if (pick) {
+                            const tempX = this.emptyTile.x; const tempY = this.emptyTile.y;
+                            this.emptyTile.x = pick.cx; this.emptyTile.y = pick.cy;
+                            pick.cx = tempX; pick.cy = tempY;
                             lastTile = pick;
-                            this.moveTile(pick);
                         }
                         moves--;
-                        setTimeout(step, 5); // Fast shuffle animation
-                    };
-                    step();
+                    }
+
+                    // Apply computed positions instantly without transition
+                    this.tiles.forEach(t => this.updateTilePos(t, false));
+                    
+                    // Force browser reflow so transition doesn't apply to initial positioning
+                    document.body.offsetHeight; 
                 }
 
                 checkWin() {
                     const won = this.tiles.every(t => t.cx === t.origX && t.cy === t.origY);
-                    if (won) setTimeout(() => alert("Puzzle Solved! Great job!"), this.cfg.time * 1000 + 50);
+                    if (won) {
+                        this.isActive = false;
+                        setTimeout(() => this.showWinScreen(), this.cfg.time * 1000 + 50);
+                    }
+                }
+
+                showWinScreen() {
+                    const overlay = document.createElement('div');
+                    overlay.className = 'win-modal';
+                    overlay.innerHTML = \`
+                        <div class="win-content">
+                            <h2>🎉 Puzzle Solved!</h2>
+                            <p>Great job completing the puzzle.</p>
+                            <button onclick="location.reload()">Play Again</button>
+                        </div>
+                    \`;
+                    document.body.appendChild(overlay);
+                    // Trigger reflow for animation
+                    document.body.offsetHeight;
+                    overlay.classList.add('visible');
                 }
             }
             window.onload = () => new FifteenPuzzle(config);
@@ -461,8 +692,66 @@ function generateGame() {
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>15 Puzzle Game</title>
     <style>
-        body { margin: 0; display: flex; align-items: center; justify-content: center; height: 100vh; background-color: #2c3e50; overflow: hidden; }
-        #game-board { box-shadow: 0 10px 30px rgba(0,0,0,0.5); }
+        body { 
+            margin: 0; 
+            display: flex; 
+            align-items: center; 
+            justify-content: center; 
+            height: 100vh; 
+            background-color: #0f172a; 
+            font-family: system-ui, sans-serif;
+            overflow: hidden; 
+        }
+        #game-board { 
+            box-shadow: 0 25px 50px -12px rgba(0,0,0,0.5); 
+            background: #1e293b;
+            border-radius: 8px;
+            overflow: hidden;
+            transform-origin: center center;
+        }
+        .win-modal {
+            position: fixed;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background: rgba(15, 23, 42, 0.85);
+            backdrop-filter: blur(4px);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.4s ease;
+            z-index: 100;
+        }
+        .win-modal.visible {
+            opacity: 1;
+            pointer-events: auto;
+        }
+        .win-content {
+            background: white;
+            padding: 40px;
+            border-radius: 16px;
+            text-align: center;
+            box-shadow: 0 20px 25px -5px rgba(0,0,0,0.1);
+            transform: translateY(20px);
+            transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+        .win-modal.visible .win-content {
+            transform: translateY(0);
+        }
+        .win-content h2 { margin: 0 0 10px 0; color: #0f172a; font-size: 28px; }
+        .win-content p { margin: 0 0 24px 0; color: #64748b; }
+        .win-content button {
+            background: #4f46e5;
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 8px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+        .win-content button:hover { background: #4338ca; }
     </style>
 </head>
 <body>
@@ -479,8 +768,18 @@ function generateGame() {
         document.body.appendChild(a);
         a.click();
         document.body.removeChild(a);
-    };
-}
+        
+        showToast("Game exported successfully!", "success");
+    }
+
+    // Expose necessary functions to window for inline HTML onclick handlers
+    window.generateGame = generateGame;
+
+    return { init };
+})();
+
+// Bootstrap
+document.addEventListener('DOMContentLoaded', App.init);
 </script>
 </body>
 </html>
