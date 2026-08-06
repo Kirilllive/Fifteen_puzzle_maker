@@ -18,16 +18,14 @@
             --text-muted: #64748b;
             --border: #e2e8f0;
             --radius: 12px;
-            --shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+            --shadow: 0 10px 15px -3px rgba(0,0,0,0.1),0 4px 6px -2px rgba(0,0,0,0.05);
         }
-        
         * {
             box-sizing: border-box;
-            font-family: 'Inter', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            font-family: 'Inter','Segoe UI',Tahoma,Geneva,Verdana,sans-serif;
             margin: 0;
             padding: 0;
         }
-
         body {
             display: flex;
             height: 100vh;
@@ -35,8 +33,6 @@
             overflow: hidden;
             color: var(--text);
         }
-
-        /* Sidebar Styling */
         .sidebar {
             width: 340px;
             background-color: var(--panel);
@@ -45,50 +41,40 @@
             flex-direction: column;
             z-index: 10;
             overflow-y: auto;
-            box-shadow: 4px 0 24px rgba(0, 0, 0, 0.04);
+            box-shadow: 4px 0 24px rgba(0,0,0,0.04);
         }
-
         .sidebar-header {
             padding: 24px 20px;
             background-color: var(--panel);
             border-bottom: 1px solid var(--border);
-            text-align: left;
             position: sticky;
             top: 0;
             z-index: 10;
         }
-
         .sidebar-header h1 {
             font-size: 20px;
             font-weight: 700;
-            color: var(--text);
             margin-bottom: 4px;
         }
-        
         .sidebar-header p {
             font-size: 13px;
             color: var(--text-muted);
         }
-
         .settings-group {
             padding: 20px;
             display: flex;
             flex-direction: column;
             gap: 16px;
         }
-
         .control-row {
             display: flex;
             justify-content: space-between;
             align-items: center;
         }
-
         .control-row label {
             font-size: 14px;
             font-weight: 500;
-            color: var(--text);
         }
-
         .input-text {
             border: 1px solid var(--border);
             border-radius: 8px;
@@ -96,24 +82,20 @@
             font-size: 14px;
             width: 130px;
             transition: all 0.2s;
-            color: var(--text);
             background: var(--bg);
             outline: none;
+            color: var(--text);
         }
-
         .input-text:focus {
             border-color: var(--primary);
-            box-shadow: 0 0 0 3px rgba(79, 70, 229, 0.15);
+            box-shadow: 0 0 0 3px rgba(79,70,229,0.15);
             background: var(--panel);
         }
-
         .input-full {
             width: 100%;
             margin-top: 8px;
             resize: vertical;
         }
-
-        /* Button Styling */
         .btn {
             background-color: var(--primary);
             color: white;
@@ -131,7 +113,6 @@
             justify-content: center;
             gap: 8px;
         }
-
         .btn:hover { background-color: var(--primary-hover); }
         .btn:active { transform: translateY(1px); }
         .btn-outline { background-color: transparent; border: 1px solid var(--border); color: var(--text); }
@@ -139,40 +120,20 @@
         .btn-generate { background-color: var(--success); margin-top: 8px; }
         .btn-generate:hover { background-color: var(--success-hover); }
 
-        /* Toggle Switch Styling */
-        .switch {
-            position: relative;
-            display: inline-block;
-            width: 44px;
-            height: 24px;
-        }
-        
+        .switch { position: relative; display: inline-block; width: 44px; height: 24px; }
         .switch input { opacity: 0; width: 0; height: 0; }
-        
         .slider {
-            position: absolute;
-            cursor: pointer;
-            top: 0; left: 0; right: 0; bottom: 0;
-            background-color: #cbd5e1;
-            transition: .3s;
-            border-radius: 24px;
+            position: absolute; cursor: pointer; top: 0; left: 0; right: 0; bottom: 0;
+            background-color: #cbd5e1; transition: .3s; border-radius: 24px;
         }
-        
         .slider:before {
-            position: absolute;
-            content: "";
-            height: 18px; width: 18px;
-            left: 3px; bottom: 3px;
-            background-color: white;
-            transition: .3s;
-            border-radius: 50%;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            position: absolute; content: ""; height: 18px; width: 18px;
+            left: 3px; bottom: 3px; background-color: white; transition: .3s;
+            border-radius: 50%; box-shadow: 0 2px 4px rgba(0,0,0,0.1);
         }
-        
         input:checked + .slider { background-color: var(--primary); }
         input:checked + .slider:before { transform: translateX(20px); }
 
-        /* Preview Area */
         .preview-area {
             flex-grow: 1;
             display: flex;
@@ -183,29 +144,15 @@
             background-image: radial-gradient(#e2e8f0 1px, transparent 1px);
             background-size: 20px 20px;
         }
-
         #drop-zone {
-            position: absolute;
-            top: 40px; left: 40px; right: 40px; bottom: 40px;
-            border: 3px dashed var(--primary);
-            border-radius: 24px;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            font-size: 20px;
-            font-weight: 600;
-            color: var(--primary);
-            background: rgba(255, 255, 255, 0.8);
-            backdrop-filter: blur(4px);
-            z-index: 1;
-            pointer-events: none;
-            opacity: 0;
-            transition: all 0.2s;
+            position: absolute; top: 40px; left: 40px; right: 40px; bottom: 40px;
+            border: 3px dashed var(--primary); border-radius: 24px;
+            display: flex; flex-direction: column; align-items: center; justify-content: center;
+            font-size: 20px; font-weight: 600; color: var(--primary);
+            background: rgba(255,255,255,0.8); backdrop-filter: blur(4px);
+            z-index: 1; pointer-events: none; opacity: 0; transition: all 0.2s;
         }
-
         #drop-zone.active { opacity: 1; transform: scale(1.02); }
-        
         #fifteen-preview {
             z-index: 2;
             box-shadow: var(--shadow);
@@ -214,43 +161,23 @@
             background-color: #fff;
             transform-origin: center center;
         }
-        
         .empty-state {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            gap: 16px;
-            color: var(--text-muted);
-            text-align: center;
-            z-index: 0;
-            position: absolute;
+            display: flex; flex-direction: column; align-items: center; gap: 16px;
+            color: var(--text-muted); text-align: center; z-index: 0; position: absolute;
         }
-        
         input[type="file"] { display: none; }
         hr { border: 0; border-top: 1px solid var(--border); margin: 8px 0; }
 
-        /* Toast Notifications */
         #toast-container {
-            position: fixed;
-            bottom: 24px;
-            right: 24px;
-            display: flex;
-            flex-direction: column;
-            gap: 12px;
-            z-index: 100;
+            position: fixed; bottom: 24px; right: 24px;
+            display: flex; flex-direction: column; gap: 12px; z-index: 100;
         }
-
         .toast {
-            background: var(--text);
-            color: white;
-            padding: 12px 24px;
-            border-radius: 8px;
-            font-size: 14px;
-            font-weight: 500;
+            background: var(--text); color: white; padding: 12px 24px;
+            border-radius: 8px; font-size: 14px; font-weight: 500;
             box-shadow: 0 4px 12px rgba(0,0,0,0.15);
-            animation: slideIn 0.3s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+            animation: slideIn 0.3s cubic-bezier(0.16,1,0.3,1) forwards;
         }
-
         @keyframes slideIn {
             from { transform: translateX(100%); opacity: 0; }
             to { transform: translateX(0); opacity: 1; }
@@ -258,33 +185,29 @@
     </style>
 </head>
 <body>
-
     <!-- Sidebar Settings -->
     <aside class="sidebar">
         <div class="sidebar-header">
             <h1>Puzzle Maker Pro</h1>
-            <p>Configure & export your game</p>
+            <p>Configure &amp; export your game</p>
         </div>
-        
         <div class="settings-group">
             <button class="btn btn-outline" onclick="document.getElementById('img_file').click();">
                 <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4M17 8l-5-5-5 5M12 3v12"/></svg>
                 Upload Image
             </button>
             <input id="img_file" type="file" accept="image/png, image/jpeg, image/webp" />
-            
             <hr>
-
             <div class="control-row">
                 <label>Difficulty (Shuffles)</label>
                 <input type="number" id="diff" class="input-text" value="150" min="10" max="1000">
             </div>
             <div class="control-row">
-                <label>Grid Columns (X)</label>
+                <label>Grid Columns</label>
                 <input type="number" id="grid_x" class="input-text" value="3" min="2" max="10">
             </div>
             <div class="control-row">
-                <label>Grid Rows (Y)</label>
+                <label>Grid Rows</label>
                 <input type="number" id="grid_y" class="input-text" value="3" min="2" max="10">
             </div>
             <div class="control-row">
@@ -299,9 +222,7 @@
                 <label>Move Speed (sec)</label>
                 <input type="number" step="0.1" id="time" class="input-text" value="0.2" min="0.05" max="1">
             </div>
-            
             <hr>
-
             <div class="control-row">
                 <label>Show Numbers</label>
                 <label class="switch"><input type="checkbox" id="show_numbers"><span class="slider"></span></label>
@@ -310,13 +231,11 @@
                 <label>Auto-Fill Screen</label>
                 <label class="switch"><input type="checkbox" id="fill_screen" checked><span class="slider"></span></label>
             </div>
-            
             <div>
-                <label style="font-size: 14px; font-weight: 500;">Tile Custom CSS</label>
+                <label style="font-size:14px;font-weight:500;">Tile Custom CSS</label>
                 <textarea id="slot_style" class="input-text input-full" rows="3">background-color:#4f46e5; display:grid; justify-items:center; align-items:center; color:#fff; font-size:24px; font-weight:bold; box-shadow:inset 0 0 0 1px rgba(255,255,255,0.2), inset 0 0 20px rgba(0,0,0,0.1); border-radius:4px;</textarea>
             </div>
-
-            <button class="btn btn-generate" onclick="generateGame()">
+            <button class="btn btn-generate" onclick="App.generateGame()">
                 <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4M7 10l5 5 5-5M12 15V3"/></svg>
                 Download HTML Game
             </button>
@@ -328,7 +247,7 @@
         <div class="empty-state" id="empty-state">
             <svg width="64" height="64" viewBox="0 0 24 24" fill="none" stroke="#cbd5e1" stroke-width="1.5"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>
             <h2>No Image Loaded</h2>
-            <p>Upload an image or drag & drop one here to preview.</p>
+            <p>Upload an image or drag &amp; drop one here to preview.</p>
         </div>
         <div id="drop-zone">Drop Image Here to Load</div>
         <div id="fifteen-preview"></div>
@@ -337,449 +256,1077 @@
     <!-- Toast Notifications -->
     <div id="toast-container"></div>
 
-<script>
-"use strict";
-
-const App = (() => {
-    // Application State
-    const state = {
-        activeFile: null,
-        imgBlobUrl: "",
-        config: {
-            diff: 150,
-            size: [500, 500],
-            grid: [3, 3],
-            fill: true,
-            number: false,
-            time: 0.2,
-            style: ""
-        }
-    };
-
-    // DOM Elements
-    const els = {
-        previewArea: document.getElementById('preview-area'),
-        dropZone: document.getElementById('drop-zone'),
-        emptyState: document.getElementById('empty-state'),
-        container: document.getElementById('fifteen-preview'),
-        toastContainer: document.getElementById('toast-container'),
-        inputs: {
-            file: document.getElementById('img_file'),
-            diff: document.getElementById('diff'),
-            width: document.getElementById('width'),
-            height: document.getElementById('height'),
-            grid_x: document.getElementById('grid_x'),
-            grid_y: document.getElementById('grid_y'),
-            time: document.getElementById('time'),
-            show_numbers: document.getElementById('show_numbers'),
-            fill_screen: document.getElementById('fill_screen'),
-            slot_style: document.getElementById('slot_style')
-        }
-    };
-
-    // Toast Notification System
-    function showToast(message, type = 'info') {
-        const toast = document.createElement('div');
-        toast.className = 'toast';
-        toast.textContent = message;
-        if(type === 'error') toast.style.backgroundColor = '#ef4444';
-        if(type === 'success') toast.style.backgroundColor = '#10b981';
-        
-        els.toastContainer.appendChild(toast);
-        setTimeout(() => {
-            toast.style.opacity = '0';
-            toast.style.transform = 'translateX(100%)';
-            toast.style.transition = 'all 0.3s ease';
-            setTimeout(() => toast.remove(), 300);
-        }, 3000);
-    }
-
-    // Initialization & Event Binding
-    function init() {
-        els.inputs.file.addEventListener('change', (e) => handleFile(e.target.files[0]));
-        
-        const textInputs = ['diff', 'width', 'height', 'grid_x', 'grid_y', 'time'];
-        textInputs.forEach(id => {
-            els.inputs[id].addEventListener('input', () => {
-                validateInputs();
-                updatePreview();
-            });
-        });
-
-        ['show_numbers', 'fill_screen'].forEach(id => {
-            els.inputs[id].addEventListener('change', updatePreview);
-        });
-        
-        els.inputs.slot_style.addEventListener('input', updatePreview);
-
-        // Drag & Drop
-        els.previewArea.addEventListener('dragover', (e) => { e.preventDefault(); els.dropZone.classList.add('active'); });
-        els.previewArea.addEventListener('dragleave', () => els.dropZone.classList.remove('active'));
-        els.previewArea.addEventListener('drop', (e) => {
-            e.preventDefault();
-            els.dropZone.classList.remove('active');
-            if (e.dataTransfer.files.length) handleFile(e.dataTransfer.files[0]);
-        });
-
-        window.addEventListener('resize', () => {
-            if (state.imgBlobUrl) scalePreview();
-        });
-    }
-
-    // Input Validation to prevent game-breaking configurations
-    function validateInputs() {
-        if(parseInt(els.inputs.grid_x.value) < 2) els.inputs.grid_x.value = 2;
-        if(parseInt(els.inputs.grid_y.value) < 2) els.inputs.grid_y.value = 2;
-        if(parseInt(els.inputs.diff.value) < 1) els.inputs.diff.value = 1;
-        if(parseInt(els.inputs.width.value) < 100) els.inputs.width.value = 100;
-        if(parseInt(els.inputs.height.value) < 100) els.inputs.height.value = 100;
-    }
-
-    // File Handling
-    function handleFile(file) {
-        if (!file || !file.type.startsWith('image/')) {
-            return showToast("Please upload a valid image file (PNG, JPG, WEBP).", "error");
-        }
-        state.activeFile = file;
-        state.imgBlobUrl = window.URL.createObjectURL(file);
-        els.emptyState.style.display = 'none';
-        
-        const img = new Image();
-        img.onload = () => {
-            els.inputs.width.value = img.width;
-            els.inputs.height.value = img.height;
-            autoGrid(img.width, img.height);
-            updatePreview();
-            showToast("Image loaded successfully!", "success");
-        };
-        img.src = state.imgBlobUrl;
-    }
-
-    // Auto-calculate optimal grid based on aspect ratio
-    function autoGrid(w, h) {
-        const ratio = w / h;
-        let gx = 3, gy = 3;
-        if (ratio > 1.3) { gx = 4; gy = 3; }
-        else if (ratio < 0.75) { gx = 3; gy = 4; }
-        
-        els.inputs.grid_x.value = gx;
-        els.inputs.grid_y.value = gy;
-    }
-
-    // Update internal config from UI
-    function syncConfig() {
-        state.config.diff = parseInt(els.inputs.diff.value) || 150;
-        state.config.size = [parseInt(els.inputs.width.value) || 500, parseInt(els.inputs.height.value) || 500];
-        state.config.grid = [parseInt(els.inputs.grid_x.value) || 3, parseInt(els.inputs.grid_y.value) || 3];
-        state.config.time = parseFloat(els.inputs.time.value) || 0.2;
-        state.config.number = els.inputs.show_numbers.checked;
-        state.config.fill = els.inputs.fill_screen.checked;
-        state.config.style = els.inputs.slot_style.value;
-    }
-
-    // Center and scale the preview based on viewport
-    function scalePreview() {
-        const areaW = els.previewArea.clientWidth - 80;
-        const areaH = els.previewArea.clientHeight - 80;
-        const scale = Math.min(1, areaW / state.config.size[0], areaH / state.config.size[1]);
-        els.container.style.transform = `scale(${scale})`;
-    }
-
-    // Render Preview
-    function updatePreview() {
-        if (!state.imgBlobUrl) return;
-        syncConfig();
-        
-        els.container.innerHTML = "";
-        els.container.style.width = state.config.size[0] + 'px';
-        els.container.style.height = state.config.size[1] + 'px';
-        els.container.style.position = 'relative';
-        
-        scalePreview();
-
-        const slotW = state.config.size[0] / state.config.grid[0];
-        const slotH = state.config.size[1] / state.config.grid[1];
-
-        // Generate tiles
-        for (let y = 0; y < state.config.grid[1]; y++) {
-            for (let x = 0; x < state.config.grid[0]; x++) {
-                if (x === state.config.grid[0] - 1 && y === state.config.grid[1] - 1) continue; // Leave last slot empty
-                
-                const slot = document.createElement('div');
-                slot.style.cssText = `
-                    position: absolute;
-                    width: ${slotW}px;
-                    height: ${slotH}px;
-                    left: ${x * slotW}px;
-                    top: ${y * slotH}px;
-                    background-image: url(${state.imgBlobUrl});
-                    background-size: ${state.config.size[0]}px ${state.config.size[1]}px;
-                    background-position: -${x * slotW}px -${y * slotH}px;
-                    box-sizing: border-box;
-                    ${state.config.style}
-                `;
-                
-                if (state.config.number) {
-                    slot.innerText = (y * state.config.grid[0] + x + 1);
-                }
-                els.container.appendChild(slot);
-            }
-        }
-    }
-
-    // Compress & Resize image to Base64 for the exported file
-    function getOptimizedBase64(url, targetW, targetH) {
-        return new Promise((resolve) => {
-            const img = new Image();
-            img.crossOrigin = "Anonymous";
-            img.onload = () => {
-                const canvas = document.createElement('canvas');
-                canvas.width = targetW;
-                canvas.height = targetH;
-                const ctx = canvas.getContext('2d');
-                ctx.imageSmoothingEnabled = true;
-                ctx.imageSmoothingQuality = 'high';
-                ctx.drawImage(img, 0, 0, targetW, targetH);
-                resolve(canvas.toDataURL('image/jpeg', 0.9));
+    <!-- ✅ 1) The robust engine (production‑ready, full features) -->
+    <script>
+    'use strict';
+    class FifteenPuzzle {
+        constructor(config = {}, containerId = 'fifteen') {
+            this.config = {
+                grid: [3, 3],
+                size: [400, 400],
+                diff: 100,
+                time: 0.3,
+                fill: false,
+                number: false,
+                keyBoard: true,
+                gamePad: false,
+                art: { url: '', ratio: false },
+                style: '',
+                emptySlot: null,
+                onWin: () => alert('Puzzle Solved!'),
+                ...config
             };
-            img.src = url;
-        });
-    }
-
-    // Generator & Exporter
-    async function generateGame() {
-        if (!state.activeFile) {
-            return showToast("Please upload an image first before exporting.", "error");
+            this.container = document.getElementById(containerId);
+            if (!this.container) {
+                throw new Error(`[FifteenPuzzle] Container #${containerId} not found.`);
+            }
+            this.cols = this.config.grid[0] + 1;
+            this.rows = this.config.grid[1] + 1;
+            this.tileWidth = this.config.size[0] / this.cols;
+            this.tileHeight = this.config.size[1] / this.rows;
+            this.matrix = [];
+            this.tiles = {};
+            this.emptyPos = { x: 0, y: 0 };
+            this.isPlaying = false;
+            this.gamepadLoopId = null;
+            this.gamepadDpadPressed = false;
+            this.isDragging = false;
+            this.pointerStart = { x: 0, y: 0 };
+            this.resizeObserver = null;
+            this._swipeJustHappened = false;
+            this._handleResize = this.handleResize.bind(this);
+            this._handleKeyDown = this.handleKeyDown.bind(this);
+            this._handleGamepad = this.handleGamepad.bind(this);
+            this._handlePointerDown = this.handlePointerDown.bind(this);
+            this._handlePointerMove = this.handlePointerMove.bind(this);
+            this._handlePointerUp = this.handlePointerUp.bind(this);
+            this._handleTouchMove = this.handleTouchMove.bind(this);
+            this.init();
         }
-        
-        syncConfig();
-        showToast("Generating optimized game file...", "info");
-
-        // Convert image to a highly optimized Base64 string matched to game resolution
-        const base64Img = await getOptimizedBase64(state.imgBlobUrl, state.config.size[0], state.config.size[1]);
-        
-        const exportConfig = JSON.parse(JSON.stringify(state.config));
-        exportConfig.art = { url: base64Img };
-
-        // --- EXPORTED ENGINE SCRIPT ---
-        // Uses instant math shuffling to prevent long loading animations
-        const engineScript = `
-            const config = ${JSON.stringify(exportConfig)};
-            class FifteenPuzzle {
-                constructor(cfg) {
-                    this.cfg = cfg;
-                    this.container = document.getElementById('game-board');
-                    this.tiles = [];
-                    this.emptyTile = { x: cfg.grid[0] - 1, y: cfg.grid[1] - 1 };
-                    this.slotW = cfg.size[0] / cfg.grid[0];
-                    this.slotH = cfg.size[1] / cfg.grid[1];
-                    this.isActive = true;
-                    this.init();
-                }
-
-                init() {
-                    this.container.style.width = this.cfg.size[0] + 'px';
-                    this.container.style.height = this.cfg.size[1] + 'px';
-                    this.container.style.position = 'relative';
-                    
-                    if (this.cfg.fill) {
-                        const resize = () => {
-                            const scale = Math.min(window.innerWidth / (this.cfg.size[0] + 40), window.innerHeight / (this.cfg.size[1] + 40));
-                            this.container.style.transform = \`scale(\${scale})\`;
-                        };
-                        window.addEventListener('resize', resize);
-                        resize();
-                    }
-
-                    let count = 1;
-                    for (let y = 0; y < this.cfg.grid[1]; y++) {
-                        for (let x = 0; x < this.cfg.grid[0]; x++) {
-                            if (x === this.cfg.grid[0] - 1 && y === this.cfg.grid[1] - 1) continue;
-
-                            const tile = document.createElement('div');
-                            tile.style.cssText = \`position:absolute; width:\${this.slotW}px; height:\${this.slotH}px; cursor:pointer; background-image:url('\${this.cfg.art.url}'); background-size:\${this.cfg.size[0]}px \${this.cfg.size[1]}px; background-position:-\${x * this.slotW}px -\${y * this.slotH}px; box-sizing:border-box; user-select:none; \${this.cfg.style}\`;
-                            
-                            if (this.cfg.number) tile.innerText = count++;
-                            
-                            const tileData = { dom: tile, cx: x, cy: y, origX: x, origY: y };
-                            this.tiles.push(tileData);
-                            
-                            tile.addEventListener('click', () => this.moveTile(tileData));
-                            this.container.appendChild(tile);
-                        }
-                    }
-                    
-                    // Instant mathematical shuffle guaranteeing solvability
-                    this.instantShuffle();
-                }
-
-                updateTilePos(t, animate) {
-                    t.dom.style.transition = animate ? \`transform \${this.cfg.time}s cubic-bezier(0.2, 0.8, 0.2, 1)\` : 'none';
-                    t.dom.style.transform = \`translate(\${t.cx * this.slotW}px, \${t.cy * this.slotH}px)\`;
-                }
-
-                moveTile(t) {
-                    if(!this.isActive) return;
-                    const dx = Math.abs(t.cx - this.emptyTile.x);
-                    const dy = Math.abs(t.cy - this.emptyTile.y);
-                    if ((dx === 1 && dy === 0) || (dx === 0 && dy === 1)) {
-                        const tempX = this.emptyTile.x; const tempY = this.emptyTile.y;
-                        this.emptyTile.x = t.cx; this.emptyTile.y = t.cy;
-                        t.cx = tempX; t.cy = tempY;
-                        this.updateTilePos(t, true);
-                        this.checkWin();
-                    }
-                }
-
-                instantShuffle() {
-                    let moves = this.cfg.diff;
-                    let lastTile = null;
-
-                    // Compute random walk
-                    while(moves > 0) {
-                        const neighbors = this.tiles.filter(t => 
-                            ((Math.abs(t.cx - this.emptyTile.x) === 1 && t.cy === this.emptyTile.y) || 
-                            (Math.abs(t.cy - this.emptyTile.y) === 1 && t.cx === this.emptyTile.x)) && t !== lastTile
-                        );
-                        const pick = neighbors[Math.floor(Math.random() * neighbors.length)];
-                        if (pick) {
-                            const tempX = this.emptyTile.x; const tempY = this.emptyTile.y;
-                            this.emptyTile.x = pick.cx; this.emptyTile.y = pick.cy;
-                            pick.cx = tempX; pick.cy = tempY;
-                            lastTile = pick;
-                        }
-                        moves--;
-                    }
-
-                    // Apply computed positions instantly without transition
-                    this.tiles.forEach(t => this.updateTilePos(t, false));
-                    
-                    // Force browser reflow so transition doesn't apply to initial positioning
-                    document.body.offsetHeight; 
-                }
-
-                checkWin() {
-                    const won = this.tiles.every(t => t.cx === t.origX && t.cy === t.origY);
-                    if (won) {
-                        this.isActive = false;
-                        setTimeout(() => this.showWinScreen(), this.cfg.time * 1000 + 50);
-                    }
-                }
-
-                showWinScreen() {
-                    const overlay = document.createElement('div');
-                    overlay.className = 'win-modal';
-                    overlay.innerHTML = \`
-                        <div class="win-content">
-                            <h2>🎉 Puzzle Solved!</h2>
-                            <p>Great job completing the puzzle.</p>
-                            <button onclick="location.reload()">Play Again</button>
-                        </div>
-                    \`;
-                    document.body.appendChild(overlay);
-                    // Trigger reflow for animation
-                    document.body.offsetHeight;
-                    overlay.classList.add('visible');
+        init() {
+            this.container.replaceChildren();
+            Object.assign(this.container.style, {
+                width: this.config.size[0] + 'px',
+                height: this.config.size[1] + 'px',
+                position: 'relative',
+                overflow: 'hidden',
+                touchAction: 'none'
+            });
+            if (this.config.fill) {
+                this.handleResize();
+                if (window.ResizeObserver) {
+                    this.resizeObserver = new ResizeObserver(() => this.handleResize());
+                    this.resizeObserver.observe(this.container.parentNode);
+                } else {
+                    window.addEventListener('resize', this._handleResize, { passive: true });
                 }
             }
-            window.onload = () => new FifteenPuzzle(config);
-        `;
+            this.generateGrid();
+            this.bindInputs();
+            this.shuffle();
+        }
+        generateGrid() {
+            const total = this.rows * this.cols;
+            let emptyTarget = this.config.emptySlot;
+            if (emptyTarget == null || emptyTarget < 1 || emptyTarget > total) {
+                emptyTarget = total;
+            }
+            let id = 1;
+            for (let y = 0; y < this.rows; y++) {
+                this.matrix[y] = [];
+                for (let x = 0; x < this.cols; x++) {
+                    if (id !== emptyTarget) {
+                        this.matrix[y][x] = id;
+                        this.createDOMTile(id, x, y);
+                    } else {
+                        this.matrix[y][x] = 0;
+                        this.emptyPos = { x, y };
+                    }
+                    id++;
+                }
+            }
+        }
+        createDOMTile(id, col, row) {
+            const tile = document.createElement('div');
+            tile.className = 'puzzle-slot';
+            tile.dataset.id = id;
+            if (this.config.number) {
+                tile.textContent = id;
+                Object.assign(tile.style, {
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    color: '#fff',
+                    fontWeight: 'bold',
+                    textShadow: '1px 1px 2px #000'
+                });
+            }
+            const bgSize = this.config.art.ratio
+                ? this.config.size[0] + 'px auto'
+                : 'auto ' + this.config.size[1] + 'px';
+            Object.assign(tile.style, {
+                position: 'absolute',
+                top: '0px',
+                left: '0px',
+                width: this.tileWidth + 'px',
+                height: this.tileHeight + 'px',
+                backgroundImage: this.config.art.url ? 'url(' + this.config.art.url + ')' : 'none',
+                backgroundSize: bgSize,
+                backgroundPosition: '-' + (this.tileWidth * col) + 'px -' + (this.tileHeight * row) + 'px',
+                cursor: 'pointer',
+                userSelect: 'none',
+                boxSizing: 'border-box'
+            });
+            if (this.config.style) {
+                tile.style.cssText += this.config.style;
+            }
+            tile.addEventListener('click', () => this.handleTileClick(id));
+            this.container.appendChild(tile);
+            this.tiles[id] = tile;
+        }
+        shuffle() {
+            let prevEmpty = { x: -1, y: -1 };
+            for (let i = 0; i < this.config.diff; i++) {
+                const { x, y } = this.emptyPos;
+                const neighbors = [];
+                if (x > 0 && !(prevEmpty.x === x - 1 && prevEmpty.y === y))
+                    neighbors.push({ x: x - 1, y });
+                if (x < this.cols - 1 && !(prevEmpty.x === x + 1 && prevEmpty.y === y))
+                    neighbors.push({ x: x + 1, y });
+                if (y > 0 && !(prevEmpty.x === x && prevEmpty.y === y - 1))
+                    neighbors.push({ x, y: y - 1 });
+                if (y < this.rows - 1 && !(prevEmpty.x === x && prevEmpty.y === y + 1))
+                    neighbors.push({ x, y: y + 1 });
+                if (neighbors.length === 0) {
+                    const all = [
+                        { x: x - 1, y }, { x: x + 1, y },
+                        { x, y: y - 1 }, { x, y: y + 1 }
+                    ].filter(p => p.x >= 0 && p.x < this.cols && p.y >= 0 && p.y < this.rows);
+                    if (all.length) neighbors.push(...all);
+                }
+                const pick = neighbors[Math.floor(Math.random() * neighbors.length)];
+                prevEmpty = { x, y };
+                this.matrix[y][x] = this.matrix[pick.y][pick.x];
+                this.matrix[pick.y][pick.x] = 0;
+                this.emptyPos = pick;
+            }
+            this.updateDOM();
+            requestAnimationFrame(() => {
+                setTimeout(() => {
+                    this.isPlaying = true;
+                    for (const tile of Object.values(this.tiles)) {
+                        tile.style.transition = this.config.time
+                            ? 'transform ' + this.config.time + 's ease-in-out'
+                            : '';
+                    }
+                }, 50);
+            });
+        }
+        handleTileClick(id) {
+            if (!this.isPlaying || this._swipeJustHappened) {
+                this._swipeJustHappened = false;
+                return;
+            }
+            const pos = this.findTilePosition(id);
+            if (pos) this.moveTile(pos.x, pos.y);
+        }
+        findTilePosition(id) {
+            for (let y = 0; y < this.rows; y++) {
+                for (let x = 0; x < this.cols; x++) {
+                    if (this.matrix[y][x] === id) return { x, y };
+                }
+            }
+            return null;
+        }
+        moveTile(x, y) {
+            const { x: ex, y: ey } = this.emptyPos;
+            if (x === ex && y === ey) return;
+            if (x === ex) {
+                const dir = Math.sign(y - ey);
+                for (let currY = ey; currY !== y; currY += dir) {
+                    this.matrix[currY][ex] = this.matrix[currY + dir][ex];
+                }
+            } else if (y === ey) {
+                const dir = Math.sign(x - ex);
+                for (let currX = ex; currX !== x; currX += dir) {
+                    this.matrix[ey][currX] = this.matrix[ey][currX + dir];
+                }
+            } else {
+                return;
+            }
+            this.matrix[y][x] = 0;
+            this.emptyPos = { x, y };
+            this.updateDOM();
+            this.checkWin();
+        }
+        updateDOM() {
+            for (let y = 0; y < this.rows; y++) {
+                for (let x = 0; x < this.cols; x++) {
+                    const id = this.matrix[y][x];
+                    if (id === 0) continue;
+                    const tile = this.tiles[id];
+                    tile.style.transform = 'translate(' + (x * this.tileWidth) + 'px, ' + (y * this.tileHeight) + 'px)';
+                }
+            }
+        }
+        checkWin() {
+            let expected = 1;
+            const total = this.rows * this.cols;
+            const emptyTarget = this.config.emptySlot || total;
+            for (let y = 0; y < this.rows; y++) {
+                for (let x = 0; x < this.cols; x++) {
+                    if (expected === emptyTarget) {
+                        if (this.matrix[y][x] !== 0) return;
+                    } else {
+                        if (this.matrix[y][x] !== expected) return;
+                    }
+                    expected++;
+                }
+            }
+            this.isPlaying = false;
+            const delay = this.config.time ? this.config.time * 1000 : 50;
+            setTimeout(() => {
+                if (typeof this.config.onWin === 'function') {
+                    this.config.onWin();
+                }
+            }, delay);
+        }
+        handleResize() {
+            const parent = this.container.parentNode;
+            if (!parent) return;
+            const rect = parent.getBoundingClientRect();
+            const scale = Math.min(rect.width / this.config.size[0], rect.height / this.config.size[1]);
+            this.container.style.transform = 'scale(' + scale + ')';
+            this.container.style.transformOrigin = 'top left';
+        }
+        handleKeyDown(e) {
+            if (!this.isPlaying) return;
+            if (e.target.matches('input, textarea, select, [contenteditable]')) return;
+            const { x, y } = this.emptyPos;
+            switch (e.key) {
+                case 'ArrowLeft':  if (x < this.cols - 1) { this.moveTile(x + 1, y); e.preventDefault(); } break;
+                case 'ArrowRight': if (x > 0)             { this.moveTile(x - 1, y); e.preventDefault(); } break;
+                case 'ArrowUp':    if (y < this.rows - 1) { this.moveTile(x, y + 1); e.preventDefault(); } break;
+                case 'ArrowDown':  if (y > 0)             { this.moveTile(x, y - 1); e.preventDefault(); } break;
+            }
+        }
+        handleGamepad() {
+            if (!this.isPlaying) return;
+            const gamepads = navigator.getGamepads ? navigator.getGamepads() : [];
+            let anyPressed = false;
+            for (const gp of gamepads) {
+                if (!gp) continue;
+                const up    = gp.buttons[12]?.pressed;
+                const down  = gp.buttons[13]?.pressed;
+                const left  = gp.buttons[14]?.pressed;
+                const right = gp.buttons[15]?.pressed;
+                if (up || down || left || right) {
+                    anyPressed = true;
+                    if (!this.gamepadDpadPressed) {
+                        const { x, y } = this.emptyPos;
+                        if (up && y < this.rows - 1)    this.moveTile(x, y + 1);
+                        else if (down && y > 0)         this.moveTile(x, y - 1);
+                        else if (left && x < this.cols - 1) this.moveTile(x + 1, y);
+                        else if (right && x > 0)        this.moveTile(x - 1, y);
+                        this.gamepadDpadPressed = true;
+                    }
+                }
+            }
+            if (!anyPressed) this.gamepadDpadPressed = false;
+            this.gamepadLoopId = requestAnimationFrame(this._handleGamepad);
+        }
+        handlePointerDown(e) {
+            if (!this.isPlaying) return;
+            this.isDragging = false;
+            this._swipeJustHappened = false;
+            this.pointerStart = { x: e.clientX, y: e.clientY };
+            this.container.setPointerCapture(e.pointerId);
+        }
+        handlePointerMove(e) {
+            if (!this.isPlaying || !this.pointerStart) return;
+            const dx = e.clientX - this.pointerStart.x;
+            const dy = e.clientY - this.pointerStart.y;
+            if (Math.abs(dx) > 8 || Math.abs(dy) > 8) {
+                this.isDragging = true;
+            }
+        }
+        handlePointerUp(e) {
+            if (!this.isPlaying) return;
+            if (!this.isDragging) {
+                this._swipeJustHappened = false;
+                return;
+            }
+            this._swipeJustHappened = true;
+            const dx = e.clientX - this.pointerStart.x;
+            const dy = e.clientY - this.pointerStart.y;
+            const { x, y } = this.emptyPos;
+            if (Math.abs(dx) > Math.abs(dy)) {
+                if (dx > 0 && x > 0) {
+                    this.moveTile(x - 1, y);
+                } else if (dx < 0 && x < this.cols - 1) {
+                    this.moveTile(x + 1, y);
+                }
+            } else {
+                if (dy > 0 && y > 0) {
+                    this.moveTile(x, y - 1);
+                } else if (dy < 0 && y < this.rows - 1) {
+                    this.moveTile(x, y + 1);
+                }
+            }
+            this.pointerStart = null;
+            this.isDragging = false;
+            this.container.releasePointerCapture(e.pointerId);
+        }
+        handleTouchMove(e) {
+            if (this.isPlaying) e.preventDefault();
+        }
+        bindInputs() {
+            if (this.config.keyBoard) {
+                document.addEventListener('keydown', this._handleKeyDown);
+            }
+            if (this.config.gamePad) {
+                const startLoop = () => {
+                    if (this.gamepadLoopId) cancelAnimationFrame(this.gamepadLoopId);
+                    this.gamepadLoopId = requestAnimationFrame(this._handleGamepad);
+                };
+                window.addEventListener('gamepadconnected', startLoop);
+                if (navigator.getGamepads) {
+                    const pads = navigator.getGamepads();
+                    if (pads.some(gp => gp)) startLoop();
+                }
+            }
+            this.container.addEventListener('pointerdown', this._handlePointerDown);
+            this.container.addEventListener('pointermove', this._handlePointerMove);
+            this.container.addEventListener('pointerup', this._handlePointerUp);
+            this.container.addEventListener('pointercancel', this._handlePointerUp);
+            this.container.addEventListener('touchmove', this._handleTouchMove, { passive: false });
+        }
+        destroy() {
+            this.isPlaying = false;
+            window.removeEventListener('resize', this._handleResize);
+            if (this.resizeObserver) {
+                this.resizeObserver.disconnect();
+                this.resizeObserver = null;
+            }
+            document.removeEventListener('keydown', this._handleKeyDown);
+            if (this.gamepadLoopId) cancelAnimationFrame(this.gamepadLoopId);
+            this.container.removeEventListener('pointerdown', this._handlePointerDown);
+            this.container.removeEventListener('pointermove', this._handlePointerMove);
+            this.container.removeEventListener('pointerup', this._handlePointerUp);
+            this.container.removeEventListener('pointercancel', this._handlePointerUp);
+            this.container.removeEventListener('touchmove', this._handleTouchMove);
+            this.container.replaceChildren();
+            this.tiles = {};
+        }
+    }
+    </script>
 
-        const htmlContent = `<!DOCTYPE html>
+    <!-- ✅ 2) Template of the robust engine for the exported game (exact same source) -->
+    <script type="text/template" id="engine-template">
+    class FifteenPuzzle {
+        constructor(config = {}, containerId = 'fifteen') {
+            this.config = {
+                grid: [3, 3],
+                size: [400, 400],
+                diff: 100,
+                time: 0.3,
+                fill: false,
+                number: false,
+                keyBoard: true,
+                gamePad: false,
+                art: { url: '', ratio: false },
+                style: '',
+                emptySlot: null,
+                onWin: () => alert('Puzzle Solved!'),
+                ...config
+            };
+            this.container = document.getElementById(containerId);
+            if (!this.container) {
+                throw new Error('[FifteenPuzzle] Container #' + containerId + ' not found.');
+            }
+            this.cols = this.config.grid[0] + 1;
+            this.rows = this.config.grid[1] + 1;
+            this.tileWidth = this.config.size[0] / this.cols;
+            this.tileHeight = this.config.size[1] / this.rows;
+            this.matrix = [];
+            this.tiles = {};
+            this.emptyPos = { x: 0, y: 0 };
+            this.isPlaying = false;
+            this.gamepadLoopId = null;
+            this.gamepadDpadPressed = false;
+            this.isDragging = false;
+            this.pointerStart = { x: 0, y: 0 };
+            this.resizeObserver = null;
+            this._swipeJustHappened = false;
+            this._handleResize = this.handleResize.bind(this);
+            this._handleKeyDown = this.handleKeyDown.bind(this);
+            this._handleGamepad = this.handleGamepad.bind(this);
+            this._handlePointerDown = this.handlePointerDown.bind(this);
+            this._handlePointerMove = this.handlePointerMove.bind(this);
+            this._handlePointerUp = this.handlePointerUp.bind(this);
+            this._handleTouchMove = this.handleTouchMove.bind(this);
+            this.init();
+        }
+        init() {
+            this.container.replaceChildren();
+            Object.assign(this.container.style, {
+                width: this.config.size[0] + 'px',
+                height: this.config.size[1] + 'px',
+                position: 'relative',
+                overflow: 'hidden',
+                touchAction: 'none'
+            });
+            if (this.config.fill) {
+                this.handleResize();
+                if (window.ResizeObserver) {
+                    this.resizeObserver = new ResizeObserver(() => this.handleResize());
+                    this.resizeObserver.observe(this.container.parentNode);
+                } else {
+                    window.addEventListener('resize', this._handleResize, { passive: true });
+                }
+            }
+            this.generateGrid();
+            this.bindInputs();
+            this.shuffle();
+        }
+        generateGrid() {
+            const total = this.rows * this.cols;
+            let emptyTarget = this.config.emptySlot;
+            if (emptyTarget == null || emptyTarget < 1 || emptyTarget > total) {
+                emptyTarget = total;
+            }
+            let id = 1;
+            for (let y = 0; y < this.rows; y++) {
+                this.matrix[y] = [];
+                for (let x = 0; x < this.cols; x++) {
+                    if (id !== emptyTarget) {
+                        this.matrix[y][x] = id;
+                        this.createDOMTile(id, x, y);
+                    } else {
+                        this.matrix[y][x] = 0;
+                        this.emptyPos = { x, y };
+                    }
+                    id++;
+                }
+            }
+        }
+        createDOMTile(id, col, row) {
+            const tile = document.createElement('div');
+            tile.className = 'puzzle-slot';
+            tile.dataset.id = id;
+            if (this.config.number) {
+                tile.textContent = id;
+                Object.assign(tile.style, {
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    color: '#fff',
+                    fontWeight: 'bold',
+                    textShadow: '1px 1px 2px #000'
+                });
+            }
+            const bgSize = this.config.art.ratio
+                ? this.config.size[0] + 'px auto'
+                : 'auto ' + this.config.size[1] + 'px';
+            Object.assign(tile.style, {
+                position: 'absolute',
+                top: '0px',
+                left: '0px',
+                width: this.tileWidth + 'px',
+                height: this.tileHeight + 'px',
+                backgroundImage: this.config.art.url ? 'url(' + this.config.art.url + ')' : 'none',
+                backgroundSize: bgSize,
+                backgroundPosition: '-' + (this.tileWidth * col) + 'px -' + (this.tileHeight * row) + 'px',
+                cursor: 'pointer',
+                userSelect: 'none',
+                boxSizing: 'border-box'
+            });
+            if (this.config.style) {
+                tile.style.cssText += this.config.style;
+            }
+            tile.addEventListener('click', () => this.handleTileClick(id));
+            this.container.appendChild(tile);
+            this.tiles[id] = tile;
+        }
+        shuffle() {
+            let prevEmpty = { x: -1, y: -1 };
+            for (let i = 0; i < this.config.diff; i++) {
+                const { x, y } = this.emptyPos;
+                const neighbors = [];
+                if (x > 0 && !(prevEmpty.x === x - 1 && prevEmpty.y === y))
+                    neighbors.push({ x: x - 1, y });
+                if (x < this.cols - 1 && !(prevEmpty.x === x + 1 && prevEmpty.y === y))
+                    neighbors.push({ x: x + 1, y });
+                if (y > 0 && !(prevEmpty.x === x && prevEmpty.y === y - 1))
+                    neighbors.push({ x, y: y - 1 });
+                if (y < this.rows - 1 && !(prevEmpty.x === x && prevEmpty.y === y + 1))
+                    neighbors.push({ x, y: y + 1 });
+                if (neighbors.length === 0) {
+                    const all = [
+                        { x: x - 1, y }, { x: x + 1, y },
+                        { x, y: y - 1 }, { x, y: y + 1 }
+                    ].filter(p => p.x >= 0 && p.x < this.cols && p.y >= 0 && p.y < this.rows);
+                    if (all.length) neighbors.push(...all);
+                }
+                const pick = neighbors[Math.floor(Math.random() * neighbors.length)];
+                prevEmpty = { x, y };
+                this.matrix[y][x] = this.matrix[pick.y][pick.x];
+                this.matrix[pick.y][pick.x] = 0;
+                this.emptyPos = pick;
+            }
+            this.updateDOM();
+            requestAnimationFrame(() => {
+                setTimeout(() => {
+                    this.isPlaying = true;
+                    for (const tile of Object.values(this.tiles)) {
+                        tile.style.transition = this.config.time
+                            ? 'transform ' + this.config.time + 's ease-in-out'
+                            : '';
+                    }
+                }, 50);
+            });
+        }
+        handleTileClick(id) {
+            if (!this.isPlaying || this._swipeJustHappened) {
+                this._swipeJustHappened = false;
+                return;
+            }
+            const pos = this.findTilePosition(id);
+            if (pos) this.moveTile(pos.x, pos.y);
+        }
+        findTilePosition(id) {
+            for (let y = 0; y < this.rows; y++) {
+                for (let x = 0; x < this.cols; x++) {
+                    if (this.matrix[y][x] === id) return { x, y };
+                }
+            }
+            return null;
+        }
+        moveTile(x, y) {
+            const { x: ex, y: ey } = this.emptyPos;
+            if (x === ex && y === ey) return;
+            if (x === ex) {
+                const dir = Math.sign(y - ey);
+                for (let currY = ey; currY !== y; currY += dir) {
+                    this.matrix[currY][ex] = this.matrix[currY + dir][ex];
+                }
+            } else if (y === ey) {
+                const dir = Math.sign(x - ex);
+                for (let currX = ex; currX !== x; currX += dir) {
+                    this.matrix[ey][currX] = this.matrix[ey][currX + dir];
+                }
+            } else {
+                return;
+            }
+            this.matrix[y][x] = 0;
+            this.emptyPos = { x, y };
+            this.updateDOM();
+            this.checkWin();
+        }
+        updateDOM() {
+            for (let y = 0; y < this.rows; y++) {
+                for (let x = 0; x < this.cols; x++) {
+                    const id = this.matrix[y][x];
+                    if (id === 0) continue;
+                    const tile = this.tiles[id];
+                    tile.style.transform = 'translate(' + (x * this.tileWidth) + 'px, ' + (y * this.tileHeight) + 'px)';
+                }
+            }
+        }
+        checkWin() {
+            let expected = 1;
+            const total = this.rows * this.cols;
+            const emptyTarget = this.config.emptySlot || total;
+            for (let y = 0; y < this.rows; y++) {
+                for (let x = 0; x < this.cols; x++) {
+                    if (expected === emptyTarget) {
+                        if (this.matrix[y][x] !== 0) return;
+                    } else {
+                        if (this.matrix[y][x] !== expected) return;
+                    }
+                    expected++;
+                }
+            }
+            this.isPlaying = false;
+            const delay = this.config.time ? this.config.time * 1000 : 50;
+            setTimeout(() => {
+                if (typeof this.config.onWin === 'function') {
+                    this.config.onWin();
+                }
+            }, delay);
+        }
+        handleResize() {
+            const parent = this.container.parentNode;
+            if (!parent) return;
+            const rect = parent.getBoundingClientRect();
+            const scale = Math.min(rect.width / this.config.size[0], rect.height / this.config.size[1]);
+            this.container.style.transform = 'scale(' + scale + ')';
+            this.container.style.transformOrigin = 'top left';
+        }
+        handleKeyDown(e) {
+            if (!this.isPlaying) return;
+            if (e.target.matches('input, textarea, select, [contenteditable]')) return;
+            const { x, y } = this.emptyPos;
+            switch (e.key) {
+                case 'ArrowLeft':  if (x < this.cols - 1) { this.moveTile(x + 1, y); e.preventDefault(); } break;
+                case 'ArrowRight': if (x > 0)             { this.moveTile(x - 1, y); e.preventDefault(); } break;
+                case 'ArrowUp':    if (y < this.rows - 1) { this.moveTile(x, y + 1); e.preventDefault(); } break;
+                case 'ArrowDown':  if (y > 0)             { this.moveTile(x, y - 1); e.preventDefault(); } break;
+            }
+        }
+        handleGamepad() {
+            if (!this.isPlaying) return;
+            const gamepads = navigator.getGamepads ? navigator.getGamepads() : [];
+            let anyPressed = false;
+            for (const gp of gamepads) {
+                if (!gp) continue;
+                const up    = gp.buttons[12]?.pressed;
+                const down  = gp.buttons[13]?.pressed;
+                const left  = gp.buttons[14]?.pressed;
+                const right = gp.buttons[15]?.pressed;
+                if (up || down || left || right) {
+                    anyPressed = true;
+                    if (!this.gamepadDpadPressed) {
+                        const { x, y } = this.emptyPos;
+                        if (up && y < this.rows - 1)    this.moveTile(x, y + 1);
+                        else if (down && y > 0)         this.moveTile(x, y - 1);
+                        else if (left && x < this.cols - 1) this.moveTile(x + 1, y);
+                        else if (right && x > 0)        this.moveTile(x - 1, y);
+                        this.gamepadDpadPressed = true;
+                    }
+                }
+            }
+            if (!anyPressed) this.gamepadDpadPressed = false;
+            this.gamepadLoopId = requestAnimationFrame(this._handleGamepad);
+        }
+        handlePointerDown(e) {
+            if (!this.isPlaying) return;
+            this.isDragging = false;
+            this._swipeJustHappened = false;
+            this.pointerStart = { x: e.clientX, y: e.clientY };
+            this.container.setPointerCapture(e.pointerId);
+        }
+        handlePointerMove(e) {
+            if (!this.isPlaying || !this.pointerStart) return;
+            const dx = e.clientX - this.pointerStart.x;
+            const dy = e.clientY - this.pointerStart.y;
+            if (Math.abs(dx) > 8 || Math.abs(dy) > 8) {
+                this.isDragging = true;
+            }
+        }
+        handlePointerUp(e) {
+            if (!this.isPlaying) return;
+            if (!this.isDragging) {
+                this._swipeJustHappened = false;
+                return;
+            }
+            this._swipeJustHappened = true;
+            const dx = e.clientX - this.pointerStart.x;
+            const dy = e.clientY - this.pointerStart.y;
+            const { x, y } = this.emptyPos;
+            if (Math.abs(dx) > Math.abs(dy)) {
+                if (dx > 0 && x > 0) {
+                    this.moveTile(x - 1, y);
+                } else if (dx < 0 && x < this.cols - 1) {
+                    this.moveTile(x + 1, y);
+                }
+            } else {
+                if (dy > 0 && y > 0) {
+                    this.moveTile(x, y - 1);
+                } else if (dy < 0 && y < this.rows - 1) {
+                    this.moveTile(x, y + 1);
+                }
+            }
+            this.pointerStart = null;
+            this.isDragging = false;
+            this.container.releasePointerCapture(e.pointerId);
+        }
+        handleTouchMove(e) {
+            if (this.isPlaying) e.preventDefault();
+        }
+        bindInputs() {
+            if (this.config.keyBoard) {
+                document.addEventListener('keydown', this._handleKeyDown);
+            }
+            if (this.config.gamePad) {
+                const startLoop = () => {
+                    if (this.gamepadLoopId) cancelAnimationFrame(this.gamepadLoopId);
+                    this.gamepadLoopId = requestAnimationFrame(this._handleGamepad);
+                };
+                window.addEventListener('gamepadconnected', startLoop);
+                if (navigator.getGamepads) {
+                    const pads = navigator.getGamepads();
+                    if (pads.some(gp => gp)) startLoop();
+                }
+            }
+            this.container.addEventListener('pointerdown', this._handlePointerDown);
+            this.container.addEventListener('pointermove', this._handlePointerMove);
+            this.container.addEventListener('pointerup', this._handlePointerUp);
+            this.container.addEventListener('pointercancel', this._handlePointerUp);
+            this.container.addEventListener('touchmove', this._handleTouchMove, { passive: false });
+        }
+        destroy() {
+            this.isPlaying = false;
+            window.removeEventListener('resize', this._handleResize);
+            if (this.resizeObserver) {
+                this.resizeObserver.disconnect();
+                this.resizeObserver = null;
+            }
+            document.removeEventListener('keydown', this._handleKeyDown);
+            if (this.gamepadLoopId) cancelAnimationFrame(this.gamepadLoopId);
+            this.container.removeEventListener('pointerdown', this._handlePointerDown);
+            this.container.removeEventListener('pointermove', this._handlePointerMove);
+            this.container.removeEventListener('pointerup', this._handlePointerUp);
+            this.container.removeEventListener('pointercancel', this._handlePointerUp);
+            this.container.removeEventListener('touchmove', this._handleTouchMove);
+            this.container.replaceChildren();
+            this.tiles = {};
+        }
+    }
+    </script>
+
+    <!-- ✅ 3) Puzzle maker application logic -->
+    <script>
+    'use strict';
+    const App = (() => {
+        // Internal state
+        const state = {
+            activeFile: null,
+            imgBlobUrl: '',
+            puzzle: null,                 // current FifteenPuzzle instance
+            debounceTimer: null,
+        };
+
+        // Cached DOM
+        const els = {
+            previewArea: document.getElementById('preview-area'),
+            dropZone: document.getElementById('drop-zone'),
+            emptyState: document.getElementById('empty-state'),
+            container: document.getElementById('fifteen-preview'),
+            toastContainer: document.getElementById('toast-container'),
+            inputs: {
+                file: document.getElementById('img_file'),
+                diff: document.getElementById('diff'),
+                width: document.getElementById('width'),
+                height: document.getElementById('height'),
+                grid_x: document.getElementById('grid_x'),
+                grid_y: document.getElementById('grid_y'),
+                time: document.getElementById('time'),
+                show_numbers: document.getElementById('show_numbers'),
+                fill_screen: document.getElementById('fill_screen'),
+                slot_style: document.getElementById('slot_style'),
+            },
+        };
+
+        function showToast(message, type = 'info') {
+            const toast = document.createElement('div');
+            toast.className = 'toast';
+            toast.textContent = message;
+            if (type === 'error') toast.style.backgroundColor = '#ef4444';
+            if (type === 'success') toast.style.backgroundColor = '#10b981';
+            els.toastContainer.appendChild(toast);
+            setTimeout(() => {
+                toast.style.opacity = '0';
+                toast.style.transform = 'translateX(100%)';
+                toast.style.transition = 'all 0.3s ease';
+                setTimeout(() => toast.remove(), 300);
+            }, 3000);
+        }
+
+        // Build a config object matching the engine's expectations
+        function getCurrentConfig() {
+            const gx = parseInt(els.inputs.grid_x.value, 10) || 3;
+            const gy = parseInt(els.inputs.grid_y.value, 10) || 3;
+            return {
+                grid: [gx - 1, gy - 1],          // engine expects (cols-1, rows-1)
+                size: [
+                    parseInt(els.inputs.width.value, 10) || 500,
+                    parseInt(els.inputs.height.value, 10) || 500,
+                ],
+                diff: parseInt(els.inputs.diff.value, 10) || 150,
+                time: parseFloat(els.inputs.time.value) || 0.2,
+                fill: els.inputs.fill_screen.checked,
+                number: els.inputs.show_numbers.checked,
+                style: els.inputs.slot_style.value,
+                art: { url: state.imgBlobUrl || '', ratio: false },
+                onWin: () => showToast('🎉 Puzzle solved! Great job.', 'success'),
+            };
+        }
+
+        // Destroy existing puzzle and create a fresh one
+        function renderPuzzle() {
+            if (!state.imgBlobUrl) return;
+
+            if (state.puzzle) {
+                state.puzzle.destroy();
+                state.puzzle = null;
+            }
+
+            const config = getCurrentConfig();
+            try {
+                state.puzzle = new FifteenPuzzle(config, 'fifteen-preview');
+                els.emptyState.style.display = 'none';
+                els.container.style.display = '';   // ensure visible
+            } catch (e) {
+                showToast('Failed to create puzzle: ' + e.message, 'error');
+            }
+        }
+
+        // Debounced update (fires on any input change)
+        function scheduleUpdate() {
+            if (state.debounceTimer) clearTimeout(state.debounceTimer);
+            state.debounceTimer = setTimeout(renderPuzzle, 200);
+        }
+
+        // Validate input ranges
+        function validateInputs() {
+            const clamp = (el, min, max) => {
+                let v = parseInt(el.value, 10);
+                if (isNaN(v)) v = min;
+                if (v < min) v = min;
+                if (v > max) v = max;
+                el.value = v;
+            };
+            clamp(els.inputs.grid_x, 2, 10);
+            clamp(els.inputs.grid_y, 2, 10);
+            clamp(els.inputs.diff, 10, 1000);
+            clamp(els.inputs.width, 200, 1200);
+            clamp(els.inputs.height, 200, 1200);
+            let t = parseFloat(els.inputs.time.value);
+            if (isNaN(t) || t < 0.05) els.inputs.time.value = 0.05;
+            if (t > 1) els.inputs.time.value = 1;
+        }
+
+        // Image file handling
+        function handleFile(file) {
+            if (!file || !file.type.startsWith('image/')) {
+                return showToast('Please upload a valid image (PNG, JPG, WEBP).', 'error');
+            }
+            // Revoke previous blob if any
+            if (state.imgBlobUrl) URL.revokeObjectURL(state.imgBlobUrl);
+
+            state.activeFile = file;
+            state.imgBlobUrl = URL.createObjectURL(file);
+            els.emptyState.style.display = 'none';
+
+            const img = new Image();
+            img.onload = () => {
+                // Auto‑set game size to image dimensions (keeps aspect ratio)
+                els.inputs.width.value = img.width;
+                els.inputs.height.value = img.height;
+                // Suggest a grid based on aspect ratio
+                const ratio = img.width / img.height;
+                if (ratio > 1.3) {
+                    els.inputs.grid_x.value = 4;
+                    els.inputs.grid_y.value = 3;
+                } else if (ratio < 0.75) {
+                    els.inputs.grid_x.value = 3;
+                    els.inputs.grid_y.value = 4;
+                } else {
+                    els.inputs.grid_x.value = 3;
+                    els.inputs.grid_y.value = 3;
+                }
+                validateInputs();
+                renderPuzzle();
+                showToast('Image loaded successfully!', 'success');
+            };
+            img.onerror = () => showToast('Failed to load image.', 'error');
+            img.src = state.imgBlobUrl;
+        }
+
+        // Compress and resize image to base64 (JPEG) for lightweight export
+        function getOptimizedBase64(url, targetW, targetH) {
+            return new Promise((resolve, reject) => {
+                const img = new Image();
+                img.crossOrigin = 'Anonymous';
+                img.onload = () => {
+                    const canvas = document.createElement('canvas');
+                    canvas.width = targetW;
+                    canvas.height = targetH;
+                    const ctx = canvas.getContext('2d');
+                    ctx.imageSmoothingEnabled = true;
+                    ctx.imageSmoothingQuality = 'high';
+                    ctx.drawImage(img, 0, 0, targetW, targetH);
+                    resolve(canvas.toDataURL('image/jpeg', 0.9));
+                };
+                img.onerror = reject;
+                img.src = url;
+            });
+        }
+
+        // Export a fully self‑contained HTML game
+        async function generateGame() {
+            if (!state.activeFile) {
+                return showToast('Please upload an image first.', 'error');
+            }
+
+            showToast('Generating optimized game file…', 'info');
+            const config = getCurrentConfig();
+
+            // Convert image to base64 matched to game resolution
+            let base64Img;
+            try {
+                base64Img = await getOptimizedBase64(state.imgBlobUrl, config.size[0], config.size[1]);
+            } catch (e) {
+                return showToast('Image processing failed.', 'error');
+            }
+
+            // Export config (with base64 image embedded)
+            const exportConfig = {
+                ...config,
+                art: { url: base64Img, ratio: false },
+                onWin: null,   // will be set inside the exported game
+            };
+
+            // Retrieve the engine source from the hidden template
+            const engineCode = document.getElementById('engine-template').textContent;
+
+            // Build the HTML without template literals to avoid escaping nightmares
+            const htmlContent =
+`<!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>15 Puzzle Game</title>
-    <style>
-        body { 
-            margin: 0; 
-            display: flex; 
-            align-items: center; 
-            justify-content: center; 
-            height: 100vh; 
-            background-color: #0f172a; 
-            font-family: system-ui, sans-serif;
-            overflow: hidden; 
-        }
-        #game-board { 
-            box-shadow: 0 25px 50px -12px rgba(0,0,0,0.5); 
-            background: #1e293b;
-            border-radius: 8px;
-            overflow: hidden;
-            transform-origin: center center;
-        }
-        .win-modal {
-            position: fixed;
-            top: 0; left: 0; right: 0; bottom: 0;
-            background: rgba(15, 23, 42, 0.85);
-            backdrop-filter: blur(4px);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            opacity: 0;
-            pointer-events: none;
-            transition: opacity 0.4s ease;
-            z-index: 100;
-        }
-        .win-modal.visible {
-            opacity: 1;
-            pointer-events: auto;
-        }
-        .win-content {
-            background: white;
-            padding: 40px;
-            border-radius: 16px;
-            text-align: center;
-            box-shadow: 0 20px 25px -5px rgba(0,0,0,0.1);
-            transform: translateY(20px);
-            transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
-        }
-        .win-modal.visible .win-content {
-            transform: translateY(0);
-        }
-        .win-content h2 { margin: 0 0 10px 0; color: #0f172a; font-size: 28px; }
-        .win-content p { margin: 0 0 24px 0; color: #64748b; }
-        .win-content button {
-            background: #4f46e5;
-            color: white;
-            border: none;
-            padding: 12px 24px;
-            border-radius: 8px;
-            font-size: 16px;
-            font-weight: 600;
-            cursor: pointer;
-            transition: background 0.2s;
-        }
-        .win-content button:hover { background: #4338ca; }
-    </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>15 Puzzle Game</title>
+<style>
+    body {
+        margin: 0;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        height: 100vh;
+        background-color: #0f172a;
+        font-family: system-ui, sans-serif;
+        overflow: hidden;
+    }
+    #game-board {
+        box-shadow: 0 25px 50px -12px rgba(0,0,0,0.5);
+        background: #1e293b;
+        border-radius: 8px;
+        overflow: hidden;
+        transform-origin: center center;
+    }
+    .win-modal {
+        position: fixed;
+        top: 0; left: 0; right: 0; bottom: 0;
+        background: rgba(15,23,42,0.85);
+        backdrop-filter: blur(4px);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        opacity: 0;
+        pointer-events: none;
+        transition: opacity 0.4s ease;
+        z-index: 100;
+    }
+    .win-modal.visible {
+        opacity: 1;
+        pointer-events: auto;
+    }
+    .win-content {
+        background: white;
+        padding: 40px;
+        border-radius: 16px;
+        text-align: center;
+        box-shadow: 0 20px 25px -5px rgba(0,0,0,0.1);
+        transform: translateY(20px);
+        transition: transform 0.4s cubic-bezier(0.16,1,0.3,1);
+    }
+    .win-modal.visible .win-content {
+        transform: translateY(0);
+    }
+    .win-content h2 { margin: 0 0 10px 0; color: #0f172a; font-size: 28px; }
+    .win-content p { margin: 0 0 24px 0; color: #64748b; }
+    .win-content button {
+        background: #4f46e5;
+        color: white;
+        border: none;
+        padding: 12px 24px;
+        border-radius: 8px;
+        font-size: 16px;
+        font-weight: 600;
+        cursor: pointer;
+        transition: background 0.2s;
+    }
+    .win-content button:hover { background: #4338ca; }
+</style>
 </head>
 <body>
-    <div id="game-board"></div>
-    <script>${engineScript}<\/script>
+<div id="game-board"></div>
+<script>
+${engineCode}
+<\/script>
+<script>
+(function() {
+    var gameConfig = ${JSON.stringify(exportConfig)};
+    gameConfig.onWin = function() {
+        var overlay = document.createElement('div');
+        overlay.className = 'win-modal';
+        overlay.innerHTML = '<div class="win-content"><h2>🎉 Puzzle Solved!</h2><p>Great job completing the puzzle.</p><button onclick="location.reload()">Play Again</button></div>';
+        document.body.appendChild(overlay);
+        requestAnimationFrame(function() {
+            overlay.classList.add('visible');
+        });
+    };
+    new FifteenPuzzle(gameConfig, 'game-board');
+})();
+<\/script>
 </body>
 </html>`;
 
-        // Create Blob and trigger download
-        const blob = new Blob([htmlContent], { type: 'text/html' });
-        const a = document.createElement('a');
-        a.href = URL.createObjectURL(blob);
-        a.download = "fifteen_puzzle_game.html";
-        document.body.appendChild(a);
-        a.click();
-        document.body.removeChild(a);
-        
-        showToast("Game exported successfully!", "success");
-    }
+            const blob = new Blob([htmlContent], { type: 'text/html' });
+            const a = document.createElement('a');
+            a.href = URL.createObjectURL(blob);
+            a.download = 'fifteen_puzzle_game.html';
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
 
-    // Expose necessary functions to window for inline HTML onclick handlers
-    window.generateGame = generateGame;
+            showToast('Game exported successfully!', 'success');
+        }
 
-    return { init };
-})();
+        // Event wiring
+        function bindEvents() {
+            els.inputs.file.addEventListener('change', (e) => {
+                if (e.target.files.length) handleFile(e.target.files[0]);
+            });
 
-// Bootstrap
-document.addEventListener('DOMContentLoaded', App.init);
-</script>
+            const changeInputs = ['diff', 'width', 'height', 'grid_x', 'grid_y', 'time'];
+            changeInputs.forEach(id => {
+                els.inputs[id].addEventListener('input', () => {
+                    validateInputs();
+                    scheduleUpdate();
+                });
+            });
+
+            ['show_numbers', 'fill_screen'].forEach(id => {
+                els.inputs[id].addEventListener('change', scheduleUpdate);
+            });
+            els.inputs.slot_style.addEventListener('input', scheduleUpdate);
+
+            // Drag & drop
+            els.previewArea.addEventListener('dragover', (e) => {
+                e.preventDefault();
+                els.dropZone.classList.add('active');
+            });
+            els.previewArea.addEventListener('dragleave', () => els.dropZone.classList.remove('active'));
+            els.previewArea.addEventListener('drop', (e) => {
+                e.preventDefault();
+                els.dropZone.classList.remove('active');
+                if (e.dataTransfer.files.length) handleFile(e.dataTransfer.files[0]);
+            });
+
+            // Window resize already handled by engine's fill mode
+        }
+
+        // Expose generateGame globally for the button's onclick
+        window.generateGame = generateGame;
+
+        return { init: bindEvents, generateGame };
+    })();
+
+    document.addEventListener('DOMContentLoaded', App.init);
+    </script>
 </body>
 </html>
