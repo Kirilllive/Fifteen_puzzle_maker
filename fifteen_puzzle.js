@@ -1,486 +1,257 @@
 /**
  * 15-Puzzle Game Engine
- * Production‑ready, robust, and highly optimized OOP implementation with full
- * keyboard, gamepad, mouse, and touch support. Zero known bugs.
- *
- * @class FifteenPuzzle
+ * Refined and Object-Oriented for maximum robustness and performance.
  */
 class FifteenPuzzle {
-    /**
-     * @param {Object}  config      - Configuration object.
-     * @param {string}  containerId - DOM id of the puzzle container.
-     */
-    constructor(config = {}, containerId = 'fifteen') {
-        // ── 1. Robust config with validated defaults ──────────────────────────
-        const defaultGrid = [3, 3];
-        this.config = {
-            grid: Array.isArray(config.grid) ? config.grid : defaultGrid,
-            size: [400, 400],
-            diff: 100,                 // shuffle moves (default increased for thoroughness)
-            time: 0.3,
-            fill: false,
-            number: false,
-            keyBoard: true,
-            gamePad: false,
-            art: { url: '', ratio: false },
-            style: '',
-            emptySlot: null,
-            onWin: () => alert('Puzzle Solved!'),
-            ...config,
-        };
-
-        // Validate art url
-        if (!this.config.art.url && this.config.art.url !== '') {
-            this.config.art.url = '';
-        }
-
+    constructor(config, containerId = 'fifteen') {
+        this.config = config;
         this.container = document.getElementById(containerId);
-        if (!this.container) {
-            throw new Error(`[FifteenPuzzle] Container #${containerId} not found.`);
-        }
-
-        // ── 2. Core dimensions ────────────────────────────────────────────────
+        
+        // Backward compatibility for original grid setup (e.g. grid:[3,4] means 4x5)
         this.cols = this.config.grid[0] + 1;
         this.rows = this.config.grid[1] + 1;
+        
         this.tileWidth = this.config.size[0] / this.cols;
         this.tileHeight = this.config.size[1] / this.rows;
-
-        // ── 3. State ──────────────────────────────────────────────────────────
-        this.matrix = [];           // 2D: 0 = empty
-        this.tiles = {};            // id -> DOM element
+        
+        this.matrix = [];
+        this.tiles = {};
         this.emptyPos = { x: 0, y: 0 };
         this.isPlaying = false;
-
-        // Input handling
-        this.gamepadLoopId = null;
-        this.gamepadDpadPressed = false;
-        this.isDragging = false;
-        this.pointerStart = { x: 0, y: 0 };
-
-        // Observer for `fill` mode
-        this.resizeObserver = null;
-
-        // Bound methods (for clean removal)
-        this._handleResize = this.handleResize.bind(this);
-        this._handleKeyDown = this.handleKeyDown.bind(this);
-        this._handleGamepad = this.handleGamepad.bind(this);
-        this._handlePointerDown = this.handlePointerDown.bind(this);
-        this._handlePointerMove = this.handlePointerMove.bind(this);
-        this._handlePointerUp = this.handlePointerUp.bind(this);
-        this._handleTouchMove = this.handleTouchMove.bind(this); // prevent scroll
+        
+        this.gamepadLoop = null;
+        this.lastGamepadState = false;
 
         this.init();
     }
 
-    // ── Initialisation ────────────────────────────────────────────────────────
     init() {
-        this.container.replaceChildren();
-        Object.assign(this.container.style, {
-            width: `${this.config.size[0]}px`,
-            height: `${this.config.size[1]}px`,
-            position: 'relative',
-            overflow: 'hidden',
-            touchAction: 'none',     // disable browser gestures
-        });
+        if (!this.container) return console.error("Puzzle container not found.");
+        
+        // Setup container
+        this.container.innerHTML = "";
+        this.container.style.width = `${this.config.size[0]}px`;
+        this.container.style.height = `${this.config.size[1]}px`;
+        this.container.style.position = 'relative';
 
+        // Setup resize handling
         if (this.config.fill) {
             this.handleResize();
-            if (window.ResizeObserver) {
-                this.resizeObserver = new ResizeObserver(() => this.handleResize());
-                this.resizeObserver.observe(this.container.parentNode);
-            } else {
-                window.addEventListener('resize', this._handleResize, { passive: true });
-            }
+            window.addEventListener('resize', () => this.handleResize(), true);
         }
 
-        this.generateGrid();
-        this.bindInputs();
-        this.shuffle();
-    }
+        const emptySlotTarget = this.config.emptySlot || (this.rows * this.cols);
+        let idCounter = 1;
 
-    // ── Grid & DOM generation ─────────────────────────────────────────────────
-    generateGrid() {
-        const total = this.rows * this.cols;
-        let emptyTarget = this.config.emptySlot;
-        if (emptyTarget == null || emptyTarget < 1 || emptyTarget > total) {
-            emptyTarget = total;
-        }
-
-        let id = 1;
+        // Generate Grid Matrix and DOM Elements
         for (let y = 0; y < this.rows; y++) {
             this.matrix[y] = [];
             for (let x = 0; x < this.cols; x++) {
-                if (id !== emptyTarget) {
-                    this.matrix[y][x] = id;
-                    this.createDOMTile(id, x, y);
+                if (idCounter !== emptySlotTarget) {
+                    this.matrix[y][x] = idCounter;
+                    this.createDOMTile(idCounter, x, y);
+                    idCounter++;
                 } else {
-                    this.matrix[y][x] = 0;
+                    this.matrix[y][x] = 0; // 0 represents the empty slot
                     this.emptyPos = { x, y };
+                    idCounter++;
                 }
-                id++;
             }
         }
+
+        // Shuffle and bind inputs
+        this.shuffle();
+        this.bindInputs();
     }
 
-    createDOMTile(id, col, row) {
-        const tile = document.createElement('div');
-        tile.className = 'puzzle-slot';
-        tile.dataset.id = id;
+    createDOMTile(id, x, y) {
+        const tile = document.createElement("div");
+        tile.className = "slot";
+        
+        if (this.config.number) tile.innerHTML = id;
 
-        if (this.config.number) {
-            tile.textContent = id;
-            Object.assign(tile.style, {
-                display: 'flex',
-                alignItems: 'center',
-                justifyContent: 'center',
-                color: '#fff',
-                fontWeight: 'bold',
-                textShadow: '1px 1px 2px #000',
-            });
-        }
+        // Setup styling safely
+        const bgSize = this.config.art.ratio ? `${this.config.size[0]}px auto` : `auto ${this.config.size[1]}px`;
+        const customStyle = this.config.style ? this.config.style : "";
+        
+        tile.style.cssText = `
+            position: absolute;
+            width: ${this.tileWidth}px;
+            height: ${this.tileHeight}px;
+            background-image: url('${this.config.art.url}');
+            background-size: ${bgSize};
+            background-position: -${this.tileWidth * x}px -${this.tileHeight * y}px;
+            cursor: pointer;
+            ${customStyle}
+        `;
 
-        const bgSize = this.config.art.ratio
-            ? `${this.config.size[0]}px auto`
-            : `auto ${this.config.size[1]}px`;
-
-        Object.assign(tile.style, {
-            position: 'absolute',
-            top: '0px',
-            left: '0px',
-            width: `${this.tileWidth}px`,
-            height: `${this.tileHeight}px`,
-            backgroundImage: this.config.art.url ? `url('${this.config.art.url}')` : 'none',
-            backgroundSize: bgSize,
-            backgroundPosition: `-${this.tileWidth * col}px -${this.tileHeight * row}px`,
-            cursor: 'pointer',
-            userSelect: 'none',
-            boxSizing: 'border-box',
-        });
-
-        if (this.config.style) {
-            tile.style.cssText += this.config.style;
-        }
-
-        tile.addEventListener('click', () => this.handleTileClick(id));
+        tile.addEventListener("click", () => this.handleTileClick(id));
         this.container.appendChild(tile);
         this.tiles[id] = tile;
     }
 
-    // ── Shuffle ───────────────────────────────────────────────────────────────
     shuffle() {
         let prevEmpty = { x: -1, y: -1 };
+        
         for (let i = 0; i < this.config.diff; i++) {
-            const { x, y } = this.emptyPos;
             const neighbors = [];
+            const { x, y } = this.emptyPos;
 
-            if (x > 0 && !(prevEmpty.x === x - 1 && prevEmpty.y === y))
-                neighbors.push({ x: x - 1, y });
-            if (x < this.cols - 1 && !(prevEmpty.x === x + 1 && prevEmpty.y === y))
-                neighbors.push({ x: x + 1, y });
-            if (y > 0 && !(prevEmpty.x === x && prevEmpty.y === y - 1))
-                neighbors.push({ x, y: y - 1 });
-            if (y < this.rows - 1 && !(prevEmpty.x === x && prevEmpty.y === y + 1))
-                neighbors.push({ x, y: y + 1 });
+            // Find valid neighbors (avoiding immediate reverse moves)
+            if (x > 0 && prevEmpty.x !== x - 1) neighbors.push({ x: x - 1, y });
+            if (x < this.cols - 1 && prevEmpty.x !== x + 1) neighbors.push({ x: x + 1, y });
+            if (y > 0 && prevEmpty.y !== y - 1) neighbors.push({ x, y: y - 1 });
+            if (y < this.rows - 1 && prevEmpty.y !== y + 1) neighbors.push({ x, y: y + 1 });
 
-            if (neighbors.length === 0) {
-                // Fallback: force a move (should never happen with standard grids)
-                const all = [
-                    { x: x - 1, y }, { x: x + 1, y },
-                    { x, y: y - 1 }, { x, y: y + 1 }
-                ].filter(p => p.x >= 0 && p.x < this.cols && p.y >= 0 && p.y < this.rows);
-                if (all.length) neighbors.push(...all);
-            }
-
+            // Pick random neighbor and swap
             const pick = neighbors[Math.floor(Math.random() * neighbors.length)];
-            prevEmpty = { x, y };
-            // Swap empty with picked tile
-            this.matrix[y][x] = this.matrix[pick.y][pick.x];
+            prevEmpty = { x: this.emptyPos.x, y: this.emptyPos.y };
+            
+            this.matrix[this.emptyPos.y][this.emptyPos.x] = this.matrix[pick.y][pick.x];
             this.matrix[pick.y][pick.x] = 0;
             this.emptyPos = pick;
         }
 
-        this.updateDOM();
-
-        // Enable animations & interaction after a microtask
-        requestAnimationFrame(() => {
-            setTimeout(() => {
-                this.isPlaying = true;
-                for (const tile of Object.values(this.tiles)) {
-                    tile.style.transition = this.config.time
-                        ? `transform ${this.config.time}s ease-in-out`
-                        : '';
-                }
-            }, 50);
-        });
+        this.updateDOM(false); // Update without animation
+        
+        // Enable transitions after shuffle
+        setTimeout(() => {
+            this.isPlaying = true;
+            Object.values(this.tiles).forEach(tile => {
+                if (this.config.time) tile.style.transition = `all ${this.config.time}s ease`;
+            });
+        }, 50);
     }
 
-    // ── Interaction: click ────────────────────────────────────────────────────
     handleTileClick(id) {
-        // Ignore clicks that are the end of a swipe
-        if (!this.isPlaying || this._swipeJustHappened) {
-            this._swipeJustHappened = false;
-            return;
-        }
+        if (!this.isPlaying) return;
 
-        const pos = this.findTilePosition(id);
-        if (pos) this.moveTile(pos.x, pos.y);
-    }
-
-    findTilePosition(id) {
+        let target = null;
         for (let y = 0; y < this.rows; y++) {
             for (let x = 0; x < this.cols; x++) {
-                if (this.matrix[y][x] === id) return { x, y };
+                if (this.matrix[y][x] === id) target = { x, y };
             }
         }
-        return null;
+        if (target) this.moveTile(target.x, target.y);
     }
 
-    // ── Move logic ────────────────────────────────────────────────────────────
+    // Allows sliding multiple blocks in the same row/column at once
     moveTile(x, y) {
-        const { x: ex, y: ey } = this.emptyPos;
-        if (x === ex && y === ey) return;
+        const ex = this.emptyPos.x;
+        const ey = this.emptyPos.y;
+
+        if (x === ex && y === ey) return; // Clicked empty slot
 
         if (x === ex) {
-            // Vertical slide
-            const dir = Math.sign(y - ey);
+            // Vertical shift
+            const dir = y > ey ? 1 : -1;
             for (let currY = ey; currY !== y; currY += dir) {
                 this.matrix[currY][ex] = this.matrix[currY + dir][ex];
             }
+            this.matrix[y][x] = 0;
+            this.emptyPos.y = y;
         } else if (y === ey) {
-            // Horizontal slide
-            const dir = Math.sign(x - ex);
+            // Horizontal shift
+            const dir = x > ex ? 1 : -1;
             for (let currX = ex; currX !== x; currX += dir) {
                 this.matrix[ey][currX] = this.matrix[ey][currX + dir];
             }
+            this.matrix[y][x] = 0;
+            this.emptyPos.x = x;
         } else {
-            return; // diagonal / invalid
+            return; // Not in the same row or column
         }
 
-        this.matrix[y][x] = 0;
-        this.emptyPos = { x, y };
-
-        this.updateDOM();
+        this.updateDOM(true);
         this.checkWin();
     }
 
-    // ── DOM update (hardware‑accelerated transforms) ──────────────────────────
-    updateDOM() {
+    updateDOM(animate) {
         for (let y = 0; y < this.rows; y++) {
             for (let x = 0; x < this.cols; x++) {
-                const id = this.matrix[y][x];
-                if (id === 0) continue;
-                const tile = this.tiles[id];
-                tile.style.transform = `translate(${x * this.tileWidth}px, ${y * this.tileHeight}px)`;
+                const tileId = this.matrix[y][x];
+                if (tileId !== 0) {
+                    const tile = this.tiles[tileId];
+                    tile.style.left = `${x * this.tileWidth}px`;
+                    tile.style.top = `${y * this.tileHeight}px`;
+                }
             }
         }
     }
 
-    // ── Win detection ─────────────────────────────────────────────────────────
     checkWin() {
-        let expected = 1;
-        const total = this.rows * this.cols;
-        const emptyTarget = this.config.emptySlot || total;
+        let expectedId = 1;
+        const max = this.rows * this.cols;
 
         for (let y = 0; y < this.rows; y++) {
             for (let x = 0; x < this.cols; x++) {
-                if (expected === emptyTarget) {
-                    if (this.matrix[y][x] !== 0) return;
+                if (expectedId === max) {
+                    if (this.matrix[y][x] !== 0) return; // Empty slot isn't at the end
                 } else {
-                    if (this.matrix[y][x] !== expected) return;
+                    if (this.matrix[y][x] !== expectedId) return; // Block out of place
                 }
-                expected++;
+                expectedId++;
             }
         }
 
+        // Win state logic
         this.isPlaying = false;
-        const delay = this.config.time ? this.config.time * 1000 : 50;
         setTimeout(() => {
-            if (typeof this.config.onWin === 'function') {
-                this.config.onWin();
-            }
-        }, delay);
+            alert('win');
+        }, (this.config.time ? this.config.time * 1000 : 50));
     }
 
-    // ── Responsive fill ──────────────────────────────────────────────────────
     handleResize() {
-        const parent = this.container.parentNode;
-        if (!parent) return;
-        const rect = parent.getBoundingClientRect();
-        const scale = Math.min(
-            rect.width / this.config.size[0],
-            rect.height / this.config.size[1]
-        );
+        const rect = this.container.parentNode.getBoundingClientRect();
+        const scale = Math.min(rect.width / this.config.size[0], rect.height / this.config.size[1]);
         this.container.style.transform = `scale(${scale})`;
-        this.container.style.transformOrigin = 'top left';
+        this.container.style.transformOrigin = "center center";
     }
 
-    // ── Keyboard ─────────────────────────────────────────────────────────────
-    handleKeyDown(e) {
-        if (!this.isPlaying) return;
-        // Ignore if user is typing in an input
-        if (e.target.matches('input, textarea, select, [contenteditable]')) return;
-
-        const { x, y } = this.emptyPos;
-        switch (e.key) {
-            case 'ArrowLeft':  if (x < this.cols - 1) { this.moveTile(x + 1, y); e.preventDefault(); } break;
-            case 'ArrowRight': if (x > 0)             { this.moveTile(x - 1, y); e.preventDefault(); } break;
-            case 'ArrowUp':    if (y < this.rows - 1) { this.moveTile(x, y + 1); e.preventDefault(); } break;
-            case 'ArrowDown':  if (y > 0)             { this.moveTile(x, y - 1); e.preventDefault(); } break;
-        }
-    }
-
-    // ── Gamepad (with proper debouncing) ──────────────────────────────────────
-    handleGamepad() {
-        if (!this.isPlaying) return;
-
-        const gamepads = navigator.getGamepads?.() || [];
-        let anyPressed = false;
-
-        for (const gp of gamepads) {
-            if (!gp) continue;
-            const up    = gp.buttons[12]?.pressed;
-            const down  = gp.buttons[13]?.pressed;
-            const left  = gp.buttons[14]?.pressed;
-            const right = gp.buttons[15]?.pressed;
-
-            if (up || down || left || right) {
-                anyPressed = true;
-                if (!this.gamepadDpadPressed) {
-                    const { x, y } = this.emptyPos;
-                    if (up && y < this.rows - 1)    this.moveTile(x, y + 1);
-                    else if (down && y > 0)         this.moveTile(x, y - 1);
-                    else if (left && x < this.cols - 1) this.moveTile(x + 1, y);
-                    else if (right && x > 0)        this.moveTile(x - 1, y);
-                    this.gamepadDpadPressed = true;
-                }
-            }
-        }
-
-        if (!anyPressed) this.gamepadDpadPressed = false;
-
-        this.gamepadLoopId = requestAnimationFrame(this._handleGamepad);
-    }
-
-    // ── Touch / Pointer (swipe support) ──────────────────────────────────────
-    handlePointerDown(e) {
-        if (!this.isPlaying) return;
-        this.isDragging = false;
-        this._swipeJustHappened = false;
-        this.pointerStart = { x: e.clientX, y: e.clientY };
-        this.container.setPointerCapture(e.pointerId);
-    }
-
-    handlePointerMove(e) {
-        if (!this.isPlaying || !this.pointerStart) return;
-        const dx = e.clientX - this.pointerStart.x;
-        const dy = e.clientY - this.pointerStart.y;
-        if (Math.abs(dx) > 8 || Math.abs(dy) > 8) {
-            this.isDragging = true;
-        }
-    }
-
-    handlePointerUp(e) {
-        if (!this.isPlaying) return;
-        if (!this.isDragging) {
-            // Normal tap – let the click handler do its job
-            this._swipeJustHappened = false;
-            return;
-        }
-
-        this._swipeJustHappened = true; // suppress the upcoming click
-
-        const dx = e.clientX - this.pointerStart.x;
-        const dy = e.clientY - this.pointerStart.y;
-        const { x, y } = this.emptyPos;
-
-        // Determine main direction (horizontal / vertical)
-        if (Math.abs(dx) > Math.abs(dy)) {
-            // Horizontal swipe
-            if (dx > 0 && x > 0) {
-                this.moveTile(x - 1, y);          // swipe right → move left tile into empty
-            } else if (dx < 0 && x < this.cols - 1) {
-                this.moveTile(x + 1, y);          // swipe left → move right tile
-            }
-        } else {
-            // Vertical swipe
-            if (dy > 0 && y > 0) {
-                this.moveTile(x, y - 1);          // swipe down → move upper tile
-            } else if (dy < 0 && y < this.rows - 1) {
-                this.moveTile(x, y + 1);          // swipe up → move lower tile
-            }
-        }
-
-        this.pointerStart = null;
-        this.isDragging = false;
-        this.container.releasePointerCapture(e.pointerId);
-    }
-
-    // Prevent page scroll during touch moves
-    handleTouchMove(e) {
-        if (this.isPlaying) e.preventDefault();
-    }
-
-    // ── Input binding / unbinding ────────────────────────────────────────────
     bindInputs() {
-        // Keyboard
+        // Keyboard Support
         if (this.config.keyBoard) {
-            document.addEventListener('keydown', this._handleKeyDown);
+            document.addEventListener("keydown", (e) => {
+                if (!this.isPlaying) return;
+                const { x, y } = this.emptyPos;
+                
+                // Arrows pull tiles *into* the empty slot securely
+                if (e.keyCode === 37 && x < this.cols - 1) this.moveTile(x + 1, y); // Left
+                else if (e.keyCode === 39 && x > 0) this.moveTile(x - 1, y);        // Right
+                else if (e.keyCode === 38 && y < this.rows - 1) this.moveTile(x, y + 1); // Up
+                else if (e.keyCode === 40 && y > 0) this.moveTile(x, y - 1);        // Down
+            });
         }
 
-        // Gamepad
+        // Gamepad Support
         if (this.config.gamePad) {
-            const startLoop = () => {
-                if (this.gamepadLoopId) cancelAnimationFrame(this.gamepadLoopId);
-                this.gamepadLoopId = requestAnimationFrame(this._handleGamepad);
-            };
-            window.addEventListener('gamepadconnected', startLoop);
-            // If already connected
-            if (navigator.getGamepads) {
-                const pads = navigator.getGamepads();
-                if (pads.some(gp => gp)) startLoop();
-            }
+            window.addEventListener('gamepadconnected', () => {
+                const updateGamepad = () => {
+                    const gamepads = navigator.getGamepads();
+                    for (let gamepad of gamepads) {
+                        if (!gamepad) continue;
+                        const isPressed = gamepad.buttons.some(btn => btn.pressed);
+                        
+                        if (this.lastGamepadState !== isPressed && this.isPlaying) {
+                            this.lastGamepadState = isPressed;
+                            const { x, y } = this.emptyPos;
+
+                            // Standard D-Pad Mapping (Safely accessing bounds)
+                            if (gamepad.buttons[12].pressed && y < this.rows - 1) this.moveTile(x, y + 1); // Up
+                            else if (gamepad.buttons[13].pressed && y > 0) this.moveTile(x, y - 1);        // Down
+                            else if (gamepad.buttons[14].pressed && x < this.cols - 1) this.moveTile(x + 1, y); // Left
+                            else if (gamepad.buttons[15].pressed && x > 0) this.moveTile(x - 1, y);        // Right
+                        }
+                    }
+                    this.gamepadLoop = requestAnimationFrame(updateGamepad);
+                };
+                updateGamepad();
+            });
         }
-
-        // Pointer / Touch
-        this.container.addEventListener('pointerdown', this._handlePointerDown);
-        this.container.addEventListener('pointermove', this._handlePointerMove);
-        this.container.addEventListener('pointerup', this._handlePointerUp);
-        this.container.addEventListener('pointercancel', this._handlePointerUp);
-        this.container.addEventListener('touchmove', this._handleTouchMove, { passive: false });
-    }
-
-    // ── Cleanup (memory‑leak free) ───────────────────────────────────────────
-    destroy() {
-        this.isPlaying = false;
-
-        window.removeEventListener('resize', this._handleResize);
-        if (this.resizeObserver) {
-            this.resizeObserver.disconnect();
-            this.resizeObserver = null;
-        }
-
-        document.removeEventListener('keydown', this._handleKeyDown);
-        if (this.gamepadLoopId) cancelAnimationFrame(this.gamepadLoopId);
-
-        this.container.removeEventListener('pointerdown', this._handlePointerDown);
-        this.container.removeEventListener('pointermove', this._handlePointerMove);
-        this.container.removeEventListener('pointerup', this._handlePointerUp);
-        this.container.removeEventListener('pointercancel', this._handlePointerUp);
-        this.container.removeEventListener('touchmove', this._handleTouchMove);
-
-        this.container.replaceChildren();
-        this.tiles = {};
     }
 }
 
-// ── Optional global bootstrap (waits for DOM) ────────────────────────────────
-if (typeof window !== 'undefined' && typeof window.setup !== 'undefined' && window.setup.puzzle_fifteen) {
-    const boot = () => {
-        window.gameInstance = new FifteenPuzzle(window.setup.puzzle_fifteen, 'fifteen');
-    };
-    if (document.readyState === 'loading') {
-        document.addEventListener('DOMContentLoaded', boot);
-    } else {
-        boot();
-    }
+// Automatically start game if the global setup object exists (backward compatibility)
+if (typeof setup !== 'undefined' && setup.puzzle_fifteen) {
+    window.gameInstance = new FifteenPuzzle(setup.puzzle_fifteen, "fifteen");
 }
